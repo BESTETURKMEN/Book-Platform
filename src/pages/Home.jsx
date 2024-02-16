@@ -11,6 +11,7 @@ import {
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
@@ -28,6 +29,8 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
+
+
 const items = [
   getItem("Kitaplar", "sub1", <MailOutlined />, [
     getItem(
@@ -53,8 +56,12 @@ const items = [
     getItem("Adam Fawer", "11"),
     getItem("Sait Faik Abasıyanık", "12"),
   ]),
-  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Profil", "13")]),
+  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Gizlilik", "13", <Link to="/Gizlilik"></Link>)]),
+
+  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "13", <Link to="/Profile"></Link>)]),
 ];
+
+
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -76,7 +83,7 @@ const footerStyle = {
   backgroundColor: "#F2F2F2",
 };
 
-function App() {
+function Home() {
   const [library, setLibrary] = useState([
     {
       id: "1",
@@ -353,5 +360,5 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
 

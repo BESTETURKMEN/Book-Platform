@@ -14,10 +14,11 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { EditOutlined, EllipsisOutlined, UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import "./style.scss";
 import { Typography } from "antd";
+
 
 const { Meta } = Card;
 
@@ -56,8 +57,11 @@ const items = [
     getItem("Adam Fawer", "11"),
     getItem("Sait Faik Abasıyanık", "12"),
   ]),
-  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Profil", "13")]),
+  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Gizlilik", "13", <Link to="/Gizlilik"></Link>)]),
+
+  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "13", <Link to="/Profile"></Link>)]),
 ];
+
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -91,6 +95,54 @@ function Likes() {
     const updatedLikes = likedBooks.filter((like) => like.id !== cardId);
     localStorage.setItem("likes", JSON.stringify(updatedLikes));
     setLikedBooks(updatedLikes);
+  }
+
+  if (likedBooks === null) {
+    return (
+      <Layout>
+        <Header style={headerStyle}
+          actions={[
+            <HeartOutlined key="heart" />,
+            <HomeOutlined key="home" />,
+            <PhoneOutlined key="phone" />,
+          ]}
+        >
+          MY BOOKS PLATFORM
+          <Link to="/Contact">
+            <PhoneOutlined className="phone" />
+          </Link>
+          <Link to="/Likes">
+            <HeartOutlined className="heart" />
+          </Link>
+          <Link to="/Home">
+            <HomeOutlined className="home" />
+          </Link></Header>
+        <Sider width="20%" style={siderStyle}>
+          <Menu
+            style={{
+              width: 256,
+            }}
+            mode="vertical"
+            items={items}
+          />
+        </Sider>
+        <Content style={contentStyle}>
+          <Typography.Title
+            level={3}
+            style={{
+              margin: 0,
+            }}
+          >
+            FAVORİLER
+            <h1>Favori Listenizde Hiçbir Öğe Bulunmamaktadır.</h1>
+          </Typography.Title>
+          <div style={{ height: "300vh", padding: 10 }}>
+            <FloatButton.BackTop />
+          </div>
+        </Content>
+        <Footer style={footerStyle}>Created by Beste Türkmen</Footer>
+      </Layout>
+    )
   }
 
   return (

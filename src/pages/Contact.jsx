@@ -10,11 +10,12 @@ import {
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, InputNumber } from "antd";
-import {  Typography } from 'antd';
+import { Typography } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -51,8 +52,11 @@ const items = [
     getItem("Adam Fawer", "11"),
     getItem("Sait Faik Abasıyanık", "12"),
   ]),
-  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Profil", "13")]),
+  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Gizlilik", "13", <Link to="/Gizlilik"></Link>)]),
+
+  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "13", <Link to="/Profile"></Link>)]),
 ];
+
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -133,17 +137,17 @@ function Contact() {
           />
         </Sider>
         <Content style={contentStyle}>
-        <Typography.Title
-        level={3}
-        style={{
-          marginLeft: "-450px",
-          marginTop: "-10px",
-          color:"#2c3e50",
-          fontSize:"22px"
-        }}
-      >
-        Bizimle Düşüncelerinizi Paylaşmak ister misiniz?
-      </Typography.Title>
+          <Typography.Title
+            level={3}
+            style={{
+              marginLeft: "-450px",
+              marginTop: "-10px",
+              color: "#2c3e50",
+              fontSize: "22px"
+            }}
+          >
+            Bizimle Düşüncelerinizi Paylaşmak ister misiniz?
+          </Typography.Title>
           <Form
             {...layout}
             name="nest-messages"
