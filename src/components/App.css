@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.baslik{
+  width: max-content;
+  height: 40px;
+  text-align: center;
+  font-size: 24px;
+  color:#282c34;
+  margin: auto;
+  padding: 20px;
+}
+.input{
+  margin-left: 88px;
+  display: flex;
+}
+.search-section{
+  justify-content: center;
+  margin-top: -32px;
+  margin-left: 775px; 
+}
+.div-section {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+}
+
+

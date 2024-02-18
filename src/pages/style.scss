@@ -1,0 +1,80 @@
+.ant-form {
+    width: 1400px;
+    height: 1400px;
+}
+
+.ant-layout-content {
+    .ant-typography {
+        margin-left: 50px;
+        margin-top: 50px;
+    }
+}
+
+.ant-card-body {
+    .heart:hover {
+        color: #ED213A
+    }
+}
+
+.border {
+    margin-left: 150px;
+    width: 800px;
+    height: 1800px;
+    border: solid grey 1px;
+
+}
+
+.border-header {
+    margin: auto;
+    width: 800px;
+    height: 200px;
+    border-bottom: solid grey 1px;
+}
+
+.profile-icon {
+    margin-left: -580px;
+    margin-top: -50px;
+}
+
+.text {
+    width: 150px;
+    margin-left: -25px;
+    margin-top: -30px;
+}
+
+.text-area {
+    width: 150px;
+    margin-left: -30px;
+    margin-top: -10px;
+}
+
+.icons {
+    width: 200px;
+    margin-top: -110px;
+    margin-left: 600px;
+}
+
+.mail {
+    margin: 15px;
+}
+
+.follow {
+    width: 80px;
+    background-color: black;
+    font: solid 15px black;
+}
+.ant-card-head-title{
+    text-align: left;
+}
+
+.ant-card {
+    margin-top: 100px;
+}
+.ant-card-body {
+    width:auto;
+}
+.ant-card-grid {
+
+    display: flex;
+    flex-wrap:nowrap;
+}
