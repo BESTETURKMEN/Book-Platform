@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import "../components/App.css";
 import "../components/style.scss";
 import { Card, Input, Button, Layout } from "antd";
-import { FloatButton } from "antd";
+import { FloatButton, notification } from "antd";
 import { Space } from "antd";
 import {
-  AppstoreOutlined,
-  MailOutlined,
   SettingOutlined,
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
   UserOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 
@@ -32,36 +30,33 @@ function getItem(label, key, icon, children, type) {
 
 
 const items = [
-  getItem("Kitaplar", "sub1", <MailOutlined />, [
-    getItem(
-      null,
-      null,
-      null,
-      [
-        getItem("İstanbul Hatırası", "1"),
-        getItem("1984", "2"),
-        getItem("Şeker Portakalı", "3"),
-        getItem("Huzursuzluk", "4"),
-        getItem("Olasılıksız", "5"),
-        getItem("Semaver", "6"),
-      ],
-      "group"
-    ),
-  ]),
-  getItem("Yazarlar", "sub2", <AppstoreOutlined />, [
-    getItem("Ahmet Ümit", "7"),
-    getItem("George Orwell", "8"),
-    getItem("Vasconcelos", "9"),
-    getItem("Zülfü Livaneli", "10"),
-    getItem("Adam Fawer", "11"),
-    getItem("Sait Faik Abasıyanık", "12"),
-  ]),
-  getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Gizlilik", "13", <Link to="/Gizlilik"></Link>)]),
-
-  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "14", <Link to="/Profile"></Link>)]),
-];
-
-
+  // getItem("Kitaplar", "sub1", <MailOutlined />, [
+  //   getItem(
+  //     null,
+  //     null,
+  //     null,
+  //     [
+  //       getItem("İstanbul Hatırası", "1"),
+  //       getItem("1984", "2"),
+  //       getItem("Şeker Portakalı", "3"),
+  //       getItem("Huzursuzluk", "4"),
+  //       getItem("Olasılıksız", "5"),
+  //       getItem("Semaver", "6"),
+  //     ],
+  //     "group"
+  //   ),
+  // ]),
+  // getItem("Yazarlar", "sub2", <AppstoreOutlined />, [
+  //   getItem("Ahmet Ümit", "7"),
+  //   getItem("George Orwell", "8"),
+  //   getItem("Vasconcelos", "9"),
+  //   getItem("Zülfü Livaneli", "10"),
+  //   getItem("Adam Fawer", "11"),
+  //   getItem("Sait Faik Abasıyanık", "12"),
+  // ]),
+  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
+  getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
+  getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -127,6 +122,76 @@ function Home() {
       yazari: "Sait Faik Abasıyanık",
       basim: "1936",
     },
+    {
+      id: "7",
+      photo: "assets/birkedibiradambirolum-3.jpg",
+      adi: "Bir Kedi Bir Adam Bir Ölüm",
+      yazari: "Zülfü Livaneli",
+      basim: "2010",
+    },
+    {
+      id: "8",
+      photo: "assets/engeregingozu-1.jpg",
+      adi: "Engereğin Gözü",
+      yazari: "Zülfü Livaneli",
+      basim: "1948",
+    },
+    {
+      id: "9",
+      photo: "assets/oyunlarlayasayanlar.jpg",
+      adi: "Oyunlarla Yaşayanlar",
+      yazari: "Oğuz Atay",
+      basim: "1990",
+    },
+    {
+      id: "10",
+      photo: "assets/huzursuzluk.jpg",
+      adi: "Huzursuzluk",
+      yazari: "Zülfü Livaneli",
+      basim: "2017",
+    },
+    {
+      id: "11",
+      photo: " assets/gogebakmaduragi.webp",
+      adi: "Göğe Bakma Durağı",
+      yazari: "Turgut Uyar",
+      basim: "2005",
+    },
+    {
+      id: "12",
+      photo: "assets/doriangrey.webp",
+      adi: "Dorian Greyin Portresi",
+      yazari: "Oscar Wilde",
+      basim: "1936",
+    },
+    {
+      id: "13",
+      photo: "assets/birbilimadamininromani.jpg",
+      adi: "Bir Bilim Adamının Romanı",
+      yazari: "Oğuz Atay",
+      basim: "1990",
+    },
+    {
+      id: "14",
+      photo: "assets/madalyonunici.webp",
+      adi: "Madalyonun İçi",
+      yazari: "Gülseren Budaycıoğlu",
+      basim: "2017",
+    },
+    {
+      id: "15",
+      photo: " assets/sircakosk.webp",
+      adi: "Sırça Köşk",
+      yazari: "Sabahattin Ali",
+      basim: "2005",
+    },
+    {
+      id: "16",
+      photo: "assets/sevdasozleri.webp",
+      adi: "Sevda Sözleri",
+      yazari: "Cemal Süreya",
+      basim: "1936",
+    },
   ]);
 
   const [book, setBook] = useState({
@@ -177,6 +242,7 @@ function Home() {
     localStorage.setItem("likes", JSON.stringify(updatedLikes));
   };
 
+  const contextHolder = notification.useNotification();
 
   return (
     <div>
@@ -189,10 +255,12 @@ function Home() {
             <PhoneOutlined key="phone" />,
           ]}
         >
-          MY BOOKS PLATFORM
+          MY BOOK PLATFORM
+          <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /></Link>
           <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
           <Link to="/Likes"><HeartOutlined className="heart" /></Link>
           <Link to="/Home"><HomeOutlined className="home" /></Link>
+
         </Header>
         <Layout>
           <Sider width="20%" style={siderStyle}>
@@ -254,8 +322,11 @@ function Home() {
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
                     <HeartOutlined className="heart" key="heart" onClick={() => likeHandler(book)} />,
-                    <EditOutlined key="edit" />,
-                    <EllipsisOutlined key="ellipsis" />,
+                    <ShoppingCartOutlined onClick={() => notification.open({
+                      message: 'Ürün Alışveriş Sepetine Eklendi.',
+                      icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
+                    })} >{contextHolder}</ShoppingCartOutlined>
+
                   ]}
                 >
                   <Meta

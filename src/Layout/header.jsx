@@ -23,7 +23,7 @@ function Header() {
       <PhoneOutlined key="phone" />,
     ]}
   >
-    MY BOOKS PLATFORM
+    MY BOOK PLATFORM
     <Link to="/Contact"><PhoneOutlined className="phone"/></Link>
     <Link to="/Favoriler"><HeartOutlined className="heart" /></Link>
     <Link to="/Home"><HomeOutlined className="home" /></Link>

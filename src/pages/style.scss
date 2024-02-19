@@ -3,10 +3,22 @@
     height: 1400px;
 }
 
-.ant-layout-content {
+.text {
     .ant-typography {
         margin-left: 50px;
         margin-top: 50px;
+    }
+}
+
+.text-area {
+    .ant-typography {
+        margin-left: 50px;
+    }
+}
+.div-section{
+    .ant-card{
+        width: 300px;
+        margin:10px;
     }
 }
 
@@ -19,8 +31,10 @@
 .border {
     margin-left: 150px;
     width: 800px;
-    height: 1800px;
-    border: solid grey 1px;
+    height: 100%;
+    border-top: solid rgb(255, 253, 253) 1px;
+    border-right: solid rgb(255, 253, 253) 1px;
+    border-left: solid rgb(255, 253, 253) 1px;
 
 }
 
@@ -28,7 +42,7 @@
     margin: auto;
     width: 800px;
     height: 200px;
-    border-bottom: solid grey 1px;
+    border-bottom: solid rgb(255, 253, 253) 1px;
 }
 
 .profile-icon {
@@ -63,18 +77,94 @@
     background-color: black;
     font: solid 15px black;
 }
-.ant-card-head-title{
+
+.ant-card-head-title {
     text-align: left;
 }
 
-.ant-card {
-    margin-top: 100px;
+.list {
+    .ant-card {
+        margin-top: 100px;
+    }
 }
+
 .ant-card-body {
-    width:auto;
+    width: auto;
 }
+
 .ant-card-grid {
 
     display: flex;
-    flex-wrap:nowrap;
+    flex-wrap: nowrap;
+}
+
+.list-1 {
+    margin-top: 45px;
+}
+
+.list-1 {
+    .ant-spin-nested-loading {
+        margin-top: 40px;
+        margin-left: 10px;
+
+    }
+}
+
+.list-1 {
+    .ant-typography {
+        margin-left: 25px;
+        text-align: left;
+    }
+}
+
+.list-1 {
+    .ant-list-item-meta-title {
+        text-align: left;
+        margin-left: 25px;
+    }
+}
+
+.list-2 {
+    margin-top: 45px;
+}
+
+.list-2 {
+    .ant-typography {
+        text-align: left;
+        margin-left: 30px;
+    }
+}
+
+.ant-spin-container {
+    margin-left: 20px;
+}
+
+.list-2 {
+    .ant-spin-nested-loading {
+        margin-top: 25px;
+
+    }
+}
+
+.list-3 {
+    .ant-card {
+        margin-top: 30px
+    }
+}
+
+.photo {
+    width: 100px;
+    height: 100px;
+}
+
+.border-photo {
+    width: 800px;
+    height: 200px;
+}
+
+.ant-menu{
+    .ant-menu-item{
+        margin-top: 20px;
+        font-size: medium;
+    }
 }

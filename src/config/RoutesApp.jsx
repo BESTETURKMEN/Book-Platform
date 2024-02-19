@@ -4,6 +4,8 @@ import Home from "../pages/Home";
 import Likes from "../pages/Likes";
 import Contact from "../pages/Contact";
 import Profile from "../pages/Profile";
+import Alisveris from "../pages/Alisveris";
+import Ayarlar from "../pages/Ayarlar";
 
 function RoutesApp() {
   return (
@@ -13,6 +15,8 @@ function RoutesApp() {
       <Route path="/Likes" element={<Likes />} />
       <Route path="/Contact" element={<Contact />} />
       <Route path="/Profile" element={<Profile />} />
+      <Route path="/Ayarlar" element={<Ayarlar />} />
+      <Route path="/Alisveris" element={<Alisveris />} />
     </Routes>
   );
 }
