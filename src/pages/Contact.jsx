@@ -54,7 +54,7 @@ const items = [
   ]),
   getItem("Ayarlar", "sub4", <SettingOutlined />, [getItem("Gizlilik", "13", <Link to="/Gizlilik"></Link>)]),
 
-  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "13", <Link to="/Profile"></Link>)]),
+  getItem('Profil', 'sub5', <UserOutlined />, [getItem("Profil", "14", <Link to="/Profile"></Link>)]),
 ];
 
 
@@ -207,7 +207,7 @@ function Contact() {
             {/* <Form.Item name={["user", "website"]} label="Website">
               <Input />
             </Form.Item> */}
-            <Form.Item name={["user", "introduction"]} label="Açıklama">
+            <Form.Item name={["user", "introduction"]} label="Düşünceleriniz">
               <Input.TextArea />
             </Form.Item>
             <Form.Item
