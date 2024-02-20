@@ -146,7 +146,7 @@ function Profile() {
                 </Link>
             </Header>
             <Layout>
-                <Sider width="20%" style={siderStyle}>
+                <Sider style={siderStyle}>
                     <Menu
                         style={{
                             width: 256,
@@ -170,7 +170,7 @@ function Profile() {
                             <Card title="Okuduğu Kitaplar" >
                                 <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/huzursuzluk.jpg"} /></Card.Grid>
                                 <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/istanbulhatirasi.jpg"} /></Card.Grid>
-                                <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/huzursuzluk.jpg"} /></Card.Grid>
+                                <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/doriangrey.webp"} /></Card.Grid>
                                 <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/olasılıksız.jpg"} /></Card.Grid>
                                 <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/sekerportakali.jpg"} /></Card.Grid>
                                 <Card.Grid style={gridStyle}><img alt=" " className="photo" src={"./assets/semaver.jpg"} /></Card.Grid>

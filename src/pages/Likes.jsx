@@ -3,7 +3,6 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Layout } from "antd";
 import { FloatButton } from "antd";
-
 import {
   ShoppingCartOutlined,
   SettingOutlined,
@@ -32,36 +31,11 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  // getItem("Kitaplar", "sub1", <MailOutlined />, [
-  //   getItem(
-  //     null,
-  //     null,
-  //     null,
-  //     [
-  //       getItem("İstanbul Hatırası", "1"),
-  //       getItem("1984", "2"),
-  //       getItem("Şeker Portakalı", "3"),
-  //       getItem("Huzursuzluk", "4"),
-  //       getItem("Olasılıksız", "5"),
-  //       getItem("Semaver", "6"),
-  //     ],
-  //     "group"
-  //   ),
-  // ]),
-  // getItem("Yazarlar", "sub2", <AppstoreOutlined />, [
-  //   getItem("Ahmet Ümit", "7"),
-  //   getItem("George Orwell", "8"),
-  //   getItem("Vasconcelos", "9"),
-  //   getItem("Zülfü Livaneli", "10"),
-  //   getItem("Adam Fawer", "11"),
-  //   getItem("Sait Faik Abasıyanık", "12"),
-  // ]),
   getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
   getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>
   )]
   ;
-
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -121,11 +95,8 @@ function Likes() {
           </Link>
         </Header>
         <Layout>
-          <Sider width="20%" style={siderStyle}>
+          <Sider style={siderStyle}>
             <Menu
-              style={{
-                width: 256,
-              }}
               mode="vertical"
               items={items}
             />
@@ -169,7 +140,7 @@ function Likes() {
         </Link>
       </Header>
       <Layout>
-        <Sider width="20%" style={siderStyle}>
+        <Sider style={siderStyle}>
           <Menu
             style={{
               width: 256,
@@ -194,8 +165,6 @@ function Likes() {
                 className="ant-card-body"
                 cover={<img className="img" alt="" src={like.photo} />}
                 actions={[
-                  // <HeartOutlined key="heart" />,
-                  // <EditOutlined key="edit" />,
                   <DeleteOutlined
                     key="ellipsis"
                     onClick={() => RemoveCard(like.id)}
@@ -205,6 +174,7 @@ function Likes() {
                 <Meta
                   title={<p>{like.adi}</p>}
                   description={<p>{like.yazari}</p>}
+                  description={<p>{like.fiyat}</p>}
                 />
               </Card>
             ))}

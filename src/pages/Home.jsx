@@ -30,30 +30,6 @@ function getItem(label, key, icon, children, type) {
 
 
 const items = [
-  // getItem("Kitaplar", "sub1", <MailOutlined />, [
-  //   getItem(
-  //     null,
-  //     null,
-  //     null,
-  //     [
-  //       getItem("İstanbul Hatırası", "1"),
-  //       getItem("1984", "2"),
-  //       getItem("Şeker Portakalı", "3"),
-  //       getItem("Huzursuzluk", "4"),
-  //       getItem("Olasılıksız", "5"),
-  //       getItem("Semaver", "6"),
-  //     ],
-  //     "group"
-  //   ),
-  // ]),
-  // getItem("Yazarlar", "sub2", <AppstoreOutlined />, [
-  //   getItem("Ahmet Ümit", "7"),
-  //   getItem("George Orwell", "8"),
-  //   getItem("Vasconcelos", "9"),
-  //   getItem("Zülfü Livaneli", "10"),
-  //   getItem("Adam Fawer", "11"),
-  //   getItem("Sait Faik Abasıyanık", "12"),
-  // ]),
   getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
   getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>)];
@@ -86,6 +62,7 @@ function Home() {
       adi: "İstanbul Hatırası",
       yazari: "Ahmet Ümit",
       basim: "2010",
+      fiyat: "22.90 TL"
     },
     {
       id: "2",
@@ -93,6 +70,7 @@ function Home() {
       adi: "1984",
       yazari: "George Orwell",
       basim: "1948",
+      fiyat: "24.90 TL"
     },
     {
       id: "3",
@@ -100,6 +78,7 @@ function Home() {
       adi: "Şeker Portakalı",
       yazari: "Vasconcelos",
       basim: "1990",
+      fiyat: "42.90 TL"
     },
     {
       id: "4",
@@ -107,6 +86,7 @@ function Home() {
       adi: "Huzursuzluk",
       yazari: "Zülfü Livaneli",
       basim: "2017",
+      fiyat: "92.90 TL"
     },
     {
       id: "5",
@@ -114,6 +94,7 @@ function Home() {
       adi: "Olasılıksız",
       yazari: "Adam Fawer",
       basim: "2005",
+      fiyat: "52.90 TL"
     },
     {
       id: "6",
@@ -121,6 +102,7 @@ function Home() {
       adi: "Semaver",
       yazari: "Sait Faik Abasıyanık",
       basim: "1936",
+      fiyat: "88.90 TL"
     },
     {
       id: "7",
@@ -128,6 +110,7 @@ function Home() {
       adi: "Bir Kedi Bir Adam Bir Ölüm",
       yazari: "Zülfü Livaneli",
       basim: "2010",
+      fiyat: "62.90 TL"
     },
     {
       id: "8",
@@ -135,6 +118,7 @@ function Home() {
       adi: "Engereğin Gözü",
       yazari: "Zülfü Livaneli",
       basim: "1948",
+      fiyat: "23.90 TL"
     },
     {
       id: "9",
@@ -142,6 +126,7 @@ function Home() {
       adi: "Oyunlarla Yaşayanlar",
       yazari: "Oğuz Atay",
       basim: "1990",
+      fiyat: "15.90 TL"
     },
     {
       id: "10",
@@ -149,6 +134,7 @@ function Home() {
       adi: "Huzursuzluk",
       yazari: "Zülfü Livaneli",
       basim: "2017",
+      fiyat: "17.90 TL"
     },
     {
       id: "11",
@@ -156,6 +142,7 @@ function Home() {
       adi: "Göğe Bakma Durağı",
       yazari: "Turgut Uyar",
       basim: "2005",
+      fiyat: "22.90 TL"
     },
     {
       id: "12",
@@ -163,6 +150,7 @@ function Home() {
       adi: "Dorian Greyin Portresi",
       yazari: "Oscar Wilde",
       basim: "1936",
+      fiyat: "27.90 TL"
     },
     {
       id: "13",
@@ -170,6 +158,7 @@ function Home() {
       adi: "Bir Bilim Adamının Romanı",
       yazari: "Oğuz Atay",
       basim: "1990",
+      fiyat: "47.90 TL"
     },
     {
       id: "14",
@@ -177,6 +166,7 @@ function Home() {
       adi: "Madalyonun İçi",
       yazari: "Gülseren Budaycıoğlu",
       basim: "2017",
+      fiyat: "33.90 TL"
     },
     {
       id: "15",
@@ -184,6 +174,7 @@ function Home() {
       adi: "Sırça Köşk",
       yazari: "Sabahattin Ali",
       basim: "2005",
+      fiyat: "87.90 TL"
     },
     {
       id: "16",
@@ -191,6 +182,7 @@ function Home() {
       adi: "Sevda Sözleri",
       yazari: "Cemal Süreya",
       basim: "1936",
+      fiyat: "102.90 TL"
     },
   ]);
 
@@ -200,6 +192,7 @@ function Home() {
     adi: "",
     yazari: "",
     basim: "",
+    fiyat: ""
   });
 
   const addBook = () => {
@@ -212,7 +205,7 @@ function Home() {
     }
 
     setLibrary([...library, book]);
-    setBook({ adi: "", yazari: "", basim: "" });
+    setBook({ adi: "", yazari: "", fiyat: "" });
     setFilteredBooks([...library, book]);
   };
 
@@ -242,7 +235,24 @@ function Home() {
     localStorage.setItem("likes", JSON.stringify(updatedLikes));
   };
 
-  const contextHolder = notification.useNotification();
+  const shopHandler = (book) => {
+    const shop = JSON.parse(localStorage.getItem("shop")) || [];
+
+    const existingBook = shop.find(item => item.id === book.id);
+    if (existingBook) {
+      return;
+    }
+
+    const updatedShop = [...shop, book];
+    localStorage.setItem("shop", JSON.stringify(updatedShop));
+
+    notification.open({
+      message: 'Ürün Alışveriş Sepetine Eklendi.',
+      icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
+    })
+  };
+
+
 
   return (
     <div>
@@ -263,7 +273,7 @@ function Home() {
 
         </Header>
         <Layout>
-          <Sider width="20%" style={siderStyle}>
+          <Sider style={siderStyle}>
             <Menu
               style={{
                 width: 256,
@@ -322,16 +332,14 @@ function Home() {
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
                     <HeartOutlined className="heart" key="heart" onClick={() => likeHandler(book)} />,
-                    <ShoppingCartOutlined onClick={() => notification.open({
-                      message: 'Ürün Alışveriş Sepetine Eklendi.',
-                      icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
-                    })} >{contextHolder}</ShoppingCartOutlined>
+                    <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
 
                   ]}
                 >
                   <Meta
                     title={<p>{book.adi}</p>}
                     description={<p>{book.yazari}</p>}
+                    description={<p>{book.fiyat}</p>}
                   />
                 </Card>
               ))}

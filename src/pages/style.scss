@@ -3,6 +3,31 @@
     height: 1400px;
 }
 
+.ant-layout-sider-children {
+    width: 256px;
+}
+
+.ant-layout {
+    .ant-layout-sider.ant-layout-sider-dark {
+        width: 256px;
+        background-color: white;
+    }
+}
+
+.ant-layout-content {
+    .ant-form {
+        margin-left: 210px;
+    }
+}
+
+
+.ant-card-cover {
+    .img {
+        width: 320px;
+        margin: 5px;
+    }
+}
+
 .text {
     .ant-typography {
         margin-left: 50px;
@@ -15,10 +40,11 @@
         margin-left: 50px;
     }
 }
-.div-section{
-    .ant-card{
-        width: 300px;
-        margin:10px;
+
+.div-section {
+    .ant-card {
+        width: 330px;
+        margin: 15px;
     }
 }
 
@@ -29,7 +55,7 @@
 }
 
 .border {
-    margin-left: 150px;
+    margin-left: 250px;
     width: 800px;
     height: 100%;
     border-top: solid rgb(255, 253, 253) 1px;
@@ -162,9 +188,31 @@
     height: 200px;
 }
 
-.ant-menu{
-    .ant-menu-item{
+.ant-menu {
+    .ant-menu-item {
         margin-top: 20px;
         font-size: medium;
+    }
+}
+
+.ant-spin-nested-loading {
+    margin: auto;
+}
+
+.alisveris {
+    .ant-btn {
+        width: 80px;
+        background-color: #ED213A;
+        margin-top: 20px;
+        margin-left: 1500px;
+
+    }
+}
+.total{
+    margin-left: 1400px;
+}
+.shoptitle {
+    .ant-typography {
+        margin-left: -1450px;
     }
 }

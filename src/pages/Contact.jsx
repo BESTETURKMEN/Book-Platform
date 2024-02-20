@@ -125,7 +125,7 @@ function Contact() {
         </Link>
       </Header>
       <Layout>
-        <Sider width="20%" style={siderStyle}>
+        <Sider style={siderStyle}>
           <Menu
             style={{
               width: 256,
@@ -141,7 +141,8 @@ function Contact() {
               marginLeft: "-450px",
               marginTop: "-10px",
               color: "#2c3e50",
-              fontSize: "22px"
+              fontSize: "20px",
+              textAlign:"center"
             }}
           >
             Bizimle Düşüncelerinizi Paylaşmak ister misiniz?
@@ -202,9 +203,6 @@ function Contact() {
             >
               <InputNumber />
             </Form.Item>
-            {/* <Form.Item name={["user", "website"]} label="Website">
-              <Input />
-            </Form.Item> */}
             <Form.Item name={["user", "introduction"]} label="Düşünceleriniz">
               <Input.TextArea />
             </Form.Item>
