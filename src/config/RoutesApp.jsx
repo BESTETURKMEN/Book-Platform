@@ -6,6 +6,7 @@ import Contact from "../pages/Contact";
 import Profile from "../pages/Profile";
 import Alisveris from "../pages/Alisveris";
 import Ayarlar from "../pages/Ayarlar";
+import Payment from "../pages/Payment";
 
 function RoutesApp() {
   return (
@@ -17,6 +18,7 @@ function RoutesApp() {
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Ayarlar" element={<Ayarlar />} />
       <Route path="/Alisveris" element={<Alisveris />} />
+      <Route path="/Payment" element={<Payment />} />
     </Routes>
   );
 }

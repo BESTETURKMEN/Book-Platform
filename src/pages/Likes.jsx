@@ -16,6 +16,7 @@ import { DeleteOutlined, UserOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import "./style.scss";
 import { Typography } from "antd";
+import { Badge } from 'antd';
 
 
 const { Meta } = Card;
@@ -58,6 +59,14 @@ const footerStyle = {
 };
 
 function Likes() {
+
+  const [badgeCount, setBadgeCount] = useState(0);
+
+  useEffect(() => {
+    const shop = JSON.parse(localStorage.getItem("shop")) || [];
+    setBadgeCount(shop.length);
+  }, []);
+
   const [likedBooks, setLikedBooks] = useState([]);
 
   useEffect(() => {
@@ -80,19 +89,15 @@ function Likes() {
             <HeartOutlined key="heart" />,
             <HomeOutlined key="home" />,
             <PhoneOutlined key="phone" />,
-          ]}
-        >
-          MY BOOK PLATFORM
-          <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /></Link>
-          <Link to="/Contact">
-            <PhoneOutlined className="phone" />
-          </Link>
-          <Link to="/Likes">
-            <HeartOutlined className="heart" />
-          </Link>
-          <Link to="/Home">
-            <HomeOutlined className="home" />
-          </Link>
+            <ShoppingCartOutlined key="shop" />,
+          ]}>
+          <div>MY BOOK PLATFORM</div>
+          <div className="icons">
+            <Link to="/Home"><HomeOutlined className="home" /></Link>
+            <Link to="/Likes"><HeartOutlined className="heart" /></Link>
+            <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
+            <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
+          </div>
         </Header>
         <Layout>
           <Sider style={siderStyle}>
@@ -125,19 +130,15 @@ function Likes() {
           <HeartOutlined key="heart" />,
           <HomeOutlined key="home" />,
           <PhoneOutlined key="phone" />,
-        ]}
-      >
-        MY BOOK PLATFORM
-        <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /></Link>
-        <Link to="/Contact">
-          <PhoneOutlined className="phone" />
-        </Link>
-        <Link to="/Likes">
-          <HeartOutlined className="heart" />
-        </Link>
-        <Link to="/Home">
-          <HomeOutlined className="home" />
-        </Link>
+          <ShoppingCartOutlined key="shop" />,
+        ]}>
+        <div>MY BOOK PLATFORM</div>
+        <div className="icons">
+          <Link to="/Home"><HomeOutlined className="home" /></Link>
+          <Link to="/Likes"><HeartOutlined className="heart" /></Link>
+          <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
+          <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
+        </div>
       </Header>
       <Layout>
         <Sider style={siderStyle}>
@@ -173,7 +174,7 @@ function Likes() {
               >
                 <Meta
                   title={<p>{like.adi}</p>}
-                  description={<p>{like.yazari}</p>}
+                  author={<p>{like.yazari}</p>}
                   description={<p>{like.fiyat}</p>}
                 />
               </Card>

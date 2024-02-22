@@ -3,6 +3,7 @@
     height: 1400px;
 }
 
+
 .ant-layout-sider-children {
     width: 256px;
 }
@@ -48,11 +49,6 @@
     }
 }
 
-.ant-card-body {
-    .heart:hover {
-        color: #ED213A
-    }
-}
 
 .border {
     margin-left: 250px;
@@ -208,11 +204,21 @@
 
     }
 }
-.total{
+
+.total {
     margin-left: 1400px;
 }
+
 .shoptitle {
     .ant-typography {
         margin-left: -1450px;
+    }
+}
+
+.ant-result-extra {
+    .ant-btn {
+        width: 130px;
+        height: 30px;
+        background-color: #bebebe;
     }
 }

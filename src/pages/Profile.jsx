@@ -2,6 +2,7 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Layout } from "antd";
 import { Card } from 'antd';
+import React, { useState, useEffect } from "react";
 
 import {
     ShoppingCartOutlined,
@@ -17,8 +18,9 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Typography } from 'antd';
 import { Button } from 'antd';
+import { Avatar, Badge } from 'antd';
 
-import { Avatar, List } from 'antd';
+import { List } from 'antd';
 const photo = [
     {
         icon: "assets/ahmetumit.jfif",
@@ -64,30 +66,6 @@ function getItem(label, key, icon, children, type) {
     };
 }
 const items = [
-    // getItem("Kitaplar", "sub1", <MailOutlined />, [
-    //   getItem(
-    //     null,
-    //     null,
-    //     null,
-    //     [
-    //       getItem("İstanbul Hatırası", "1"),
-    //       getItem("1984", "2"),
-    //       getItem("Şeker Portakalı", "3"),
-    //       getItem("Huzursuzluk", "4"),
-    //       getItem("Olasılıksız", "5"),
-    //       getItem("Semaver", "6"),
-    //     ],
-    //     "group"
-    //   ),
-    // ]),
-    // getItem("Yazarlar", "sub2", <AppstoreOutlined />, [
-    //   getItem("Ahmet Ümit", "7"),
-    //   getItem("George Orwell", "8"),
-    //   getItem("Vasconcelos", "9"),
-    //   getItem("Zülfü Livaneli", "10"),
-    //   getItem("Adam Fawer", "11"),
-    //   getItem("Sait Faik Abasıyanık", "12"),
-    // ]),
     getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
     getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
     getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>
@@ -123,6 +101,13 @@ const datas = [
 ]
 
 function Profile() {
+
+    const [badgeCount, setBadgeCount] = useState(0);
+
+    useEffect(() => {
+        const shop = JSON.parse(localStorage.getItem("shop")) || [];
+        setBadgeCount(shop.length);
+    }, []);
     return (
         <Layout style={layoutStyle}>
             <Header
@@ -131,19 +116,15 @@ function Profile() {
                     <HeartOutlined key="heart" />,
                     <HomeOutlined key="home" />,
                     <PhoneOutlined key="phone" />,
-                ]}
-            >
-                MY BOOK PLATFORM
-                <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /></Link>
-                <Link to="/Contact">
-                    <PhoneOutlined className="phone" />
-                </Link>
-                <Link to="/Likes">
-                    <HeartOutlined className="heart" />
-                </Link>
-                <Link to="/Home">
-                    <HomeOutlined className="home" />
-                </Link>
+                    <ShoppingCartOutlined key="shop" />,
+                ]}>
+                <div>MY BOOK PLATFORM</div>
+                <div className="icons">
+                    <Link to="/Home"><HomeOutlined className="home" /></Link>
+                    <Link to="/Likes"><HeartOutlined className="heart" /></Link>
+                    <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
+                    <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
+                </div>
             </Header>
             <Layout>
                 <Sider style={siderStyle}>

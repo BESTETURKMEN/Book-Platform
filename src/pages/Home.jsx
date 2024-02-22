@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../components/App.css";
 import "../components/style.scss";
 import { Card, Input, Button, Layout } from "antd";
 import { FloatButton, notification } from "antd";
-import { Space } from "antd";
 import {
   SettingOutlined,
   HeartOutlined,
@@ -14,7 +13,8 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-
+import Heart from "../components/heart";
+import { Badge, Space } from 'antd';
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -27,7 +27,6 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
-
 
 const items = [
   getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
@@ -55,6 +54,14 @@ const footerStyle = {
 };
 
 function Home() {
+
+  const [badgeCount, setBadgeCount] = useState(0);
+
+  useEffect(() => {
+    const shop = JSON.parse(localStorage.getItem("shop")) || [];
+    setBadgeCount(shop.length);
+  }, []);
+
   const [library, setLibrary] = useState([
     {
       id: "1",
@@ -237,12 +244,10 @@ function Home() {
 
   const shopHandler = (book) => {
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
-
     const existingBook = shop.find(item => item.id === book.id);
     if (existingBook) {
       return;
     }
-
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
@@ -263,14 +268,15 @@ function Home() {
             <HeartOutlined key="heart" />,
             <HomeOutlined key="home" />,
             <PhoneOutlined key="phone" />,
-          ]}
-        >
-          MY BOOK PLATFORM
-          <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /></Link>
-          <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
-          <Link to="/Likes"><HeartOutlined className="heart" /></Link>
-          <Link to="/Home"><HomeOutlined className="home" /></Link>
-
+            <ShoppingCartOutlined key="shop" />,
+          ]}>
+          <div>MY BOOK PLATFORM</div>
+          <div className="icons">
+            <Link to="/Home"><HomeOutlined className="home" /></Link>
+            <Link to="/Likes"><HeartOutlined className="heart" /></Link>
+            <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
+            <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
+          </div>
         </Header>
         <Layout>
           <Sider style={siderStyle}>
@@ -318,6 +324,7 @@ function Home() {
                 <Input
                   placeholder="Kitap Adı ile Arama Yapınız."
                   onChange={inputSearch}
+                  onKeyUp={searchData}
                 />
                 <Button type="primary" onClick={searchData}>
                   Ara
@@ -331,14 +338,13 @@ function Home() {
                   className="ant-card-body"
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
-                    <HeartOutlined className="heart" key="heart" onClick={() => likeHandler(book)} />,
+                    <div onClick={() => likeHandler(book)}><Heart key="heart" /></div>,
                     <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
-
                   ]}
                 >
                   <Meta
                     title={<p>{book.adi}</p>}
-                    description={<p>{book.yazari}</p>}
+                    author={<p>{book.yazari}</p>}
                     description={<p>{book.fiyat}</p>}
                   />
                 </Card>

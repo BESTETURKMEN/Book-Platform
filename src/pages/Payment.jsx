@@ -1,6 +1,8 @@
 import "../components/App.css";
 import "../components/style.scss";
 import { Layout } from "antd";
+import React, { useState, useEffect } from "react";
+import { Button, Result } from 'antd';
 import {
     SettingOutlined,
     HeartOutlined,
@@ -12,8 +14,6 @@ import {
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Badge } from 'antd';
-import React, { useState,useEffect } from "react";
-
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -50,9 +50,8 @@ const footerStyle = {
     backgroundColor: "#F2F2F2",
 };
 
+function Payment() {
 
-function Ayarlar() {
-    
     const [badgeCount, setBadgeCount] = useState(0);
     useEffect(() => {
         const shop = JSON.parse(localStorage.getItem("shop")) || [];
@@ -78,7 +77,7 @@ function Ayarlar() {
                 </div>
             </Header>
             <Layout>
-                <Sider width="20%" style={siderStyle}>
+                <Sider style={siderStyle}>
                     <Menu
                         style={{
                             width: 256,
@@ -88,11 +87,17 @@ function Ayarlar() {
                     />
                 </Sider>
                 <Content style={contentStyle}>
-
-
-                    <h1>AYARLAR</h1>
-
-
+                    <div>
+                        <Result
+                            status="success"
+                            title="Satın Alma İşleminiz Başarıyla Gerçekleştirildi."
+                            subTitle="Sipariş numarası: 2017182818828182881 "
+                            extra={[
+                                <Link to="/Home"><Button type="primary" key="console">Anasayfaya Dön</Button></Link>,
+                                <Link to="/Alisveris"><Button type="primary" key="buy">Sepete Dön</Button></Link>
+                            ]}
+                        />
+                    </div>
                 </Content>
             </Layout>
             <Footer style={footerStyle}>Created by Beste Türkmen</Footer>
@@ -100,4 +105,4 @@ function Ayarlar() {
     );
 }
 
-export default Ayarlar;
+export default Payment;
