@@ -61,16 +61,16 @@ const footerStyle = {
 function Likes() {
 
   const [badgeCount, setBadgeCount] = useState(0);
-
   useEffect(() => {
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
     setBadgeCount(shop.length);
   }, []);
 
+
   const [likedBooks, setLikedBooks] = useState([]);
 
   useEffect(() => {
-    const likes = JSON.parse(localStorage.getItem("likes"));
+    const likes = JSON.parse(localStorage.getItem("likes") || []);
     setLikedBooks(likes);
   }, []);
 

@@ -3,7 +3,6 @@ import "../components/style.scss";
 import { Layout } from "antd";
 import { Card } from 'antd';
 import React, { useState, useEffect } from "react";
-
 import {
     ShoppingCartOutlined,
     MailOutlined,
@@ -19,7 +18,6 @@ import { Link } from "react-router-dom";
 import { Typography } from 'antd';
 import { Button } from 'antd';
 import { Avatar, Badge } from 'antd';
-
 import { List } from 'antd';
 const photo = [
     {
@@ -53,7 +51,6 @@ const gridStyle = {
     textAlign: 'center',
 
 };
-
 const { Title, Text } = Typography;
 const { Header, Content, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -71,7 +68,6 @@ const items = [
     getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>
     )]
     ;
-
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
     textAlign: "center",
@@ -86,8 +82,6 @@ const contentStyle = {
     padding: "50px",
     textAlign: "center",
 };
-
-
 const datas = [
     "Edebiyat",
     "Roman",
@@ -101,9 +95,7 @@ const datas = [
 ]
 
 function Profile() {
-
     const [badgeCount, setBadgeCount] = useState(0);
-
     useEffect(() => {
         const shop = JSON.parse(localStorage.getItem("shop")) || [];
         setBadgeCount(shop.length);

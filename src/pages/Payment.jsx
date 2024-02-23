@@ -29,7 +29,6 @@ const items = [
     getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
     getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
     getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>)];
-
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
     textAlign: "center",

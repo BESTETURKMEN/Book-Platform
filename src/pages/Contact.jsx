@@ -46,12 +46,10 @@ const contentStyle = {
   padding: "50px",
   textAlign: "center",
 };
-
 const footerStyle = {
   textAlign: "center",
   backgroundColor: "#F2F2F2",
 };
-
 const layout = {
   labelCol: {
     span: 8,
@@ -74,9 +72,6 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values) => {
-  console.log(values);
-};
 
 function Contact() {
 
@@ -130,7 +125,6 @@ function Contact() {
           <Form
             {...layout}
             name="nest-messages"
-            onFinish={onFinish}
             style={{
               maxWidth: 600,
               marginTop: "50px"

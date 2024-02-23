@@ -12,7 +12,7 @@ import {
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Badge } from 'antd';
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -52,7 +52,7 @@ const footerStyle = {
 
 
 function Ayarlar() {
-    
+
     const [badgeCount, setBadgeCount] = useState(0);
     useEffect(() => {
         const shop = JSON.parse(localStorage.getItem("shop")) || [];
@@ -88,11 +88,7 @@ function Ayarlar() {
                     />
                 </Sider>
                 <Content style={contentStyle}>
-
-
                     <h1>AYARLAR</h1>
-
-
                 </Content>
             </Layout>
             <Footer style={footerStyle}>Created by Beste Türkmen</Footer>

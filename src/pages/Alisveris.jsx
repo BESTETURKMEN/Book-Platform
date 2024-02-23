@@ -1,6 +1,6 @@
 import "../components/App.css";
 import "../components/style.scss";
-import { Layout, Button, notification, Space } from "antd";
+import { Layout, Button } from "antd";
 import {
     SettingOutlined,
     HeartOutlined,
@@ -16,7 +16,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { Typography } from "antd";
 import { Badge } from 'antd';
-import Payment from "./Payment";
+
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -54,12 +54,6 @@ const footerStyle = {
     backgroundColor: "#F2F2F2",
 };
 
-// const close = () => {
-//     console.log(
-//         'Notification was closed. Either the close button was clicked or duration time elapsed.',
-//     );
-// }
-
 function Alisveris() {
 
     const [badgeCount, setBadgeCount] = useState(0);
@@ -69,7 +63,7 @@ function Alisveris() {
     }, []);
 
     const [shopBooks, setShopBooks] = useState([]);
-    // const [api, contextHolder] = notification.useNotification();
+
 
     useEffect(() => {
         const shopBooksJSON = localStorage.getItem("shop");
@@ -96,6 +90,8 @@ function Alisveris() {
         const updatedRows = shopBooks.filter(book => book.id !== rowId);
         localStorage.setItem("shop", JSON.stringify(updatedRows));
         setShopBooks(updatedRows);
+
+        setBadgeCount(prevCount => prevCount - 1); /* sepetteki değeri 1 azalt*/
     }
 
     const columns = [
@@ -177,7 +173,7 @@ function Alisveris() {
                                 margin: 0,
                             }}
                         >
-                            SEPETİNİZDE HİÇBİR ÖĞE BULUNMAMAKTADIR.
+                            SEPETİNİZDE ÜRÜN BULUNMAMAKTADIR.
                         </Typography.Title>
                     </Content>
                 </Layout>
@@ -190,29 +186,6 @@ function Alisveris() {
     shopBooks.map(book => {
         topla += parseFloat(book.toplam) || 0;
     });
-
-
-    //  function paymentScreen(){
-    //      const key = `open${Date.now()}`;
-    //      const btn = (
-    //          <Space>
-    //              <Button type="link" size="small" onClick={() => api.destroy()}>
-    //                  Destroy All
-    //              </Button>
-    //              <Button type="primary" size="small" onClick={() => api.destroy(key)}>
-    //                  Confirm
-    //              </Button>
-    //          </Space>
-    //      );
-    //      api.open({
-    //          message: 'Notification Title',
-    //          description:
-    //              'A function will be be called after the notification is closed (automatically after the "duration" time of manually).',
-    //          btn,
-    //          key,
-    //          onClose: close
-    //      });
-    //     }
 
     return (
         <Layout style={layoutStyle}>

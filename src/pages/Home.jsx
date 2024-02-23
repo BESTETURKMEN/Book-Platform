@@ -193,7 +193,7 @@ function Home() {
     },
   ]);
 
-  const [book, setBook] = useState({
+  const [book, setBook] = useState({  /* kullanıcı kitap eklerse*/
     id: "",
     photo: "assets/eklenenkitap.jpg",
     adi: "",
@@ -202,7 +202,7 @@ function Home() {
     fiyat: ""
   });
 
-  const addBook = () => {
+  const addBook = () => { /* boşlukları temizle*/
     if (
       book.adi.trim() === "" ||
       book.yazari.trim() === "" ||
@@ -224,25 +224,36 @@ function Home() {
     setInputText(lowerCase);
   };
 
-  const searchData = () => {
+  const searchData = () => {  /*büyük küçük harf ve ingilizce kelime  duyarlılığı*/
     const filteredData = library.filter((e) =>
       e.adi.toLocaleLowerCase().includes(inputText)
     );
     setFilteredBooks(filteredData);
   };
 
-  const likeHandler = (book) => {
-    const likes = JSON.parse(localStorage.getItem("likes")) || [];
+  const [likedBooks, setLikedBooks] = useState([]);
+  useEffect(() => {
+    const likes = JSON.parse(localStorage.getItem("likes") || []);
+    setLikedBooks(likes);
+  }, []);
 
-    const existingBook = likes.find(item => item.id === book.id);
-    if (existingBook) {
-      return;
+  const addAndRemoveFavorite = (bookId) => {  /*eklenmediyse ekler, ekliyse siler */
+    const isBookLiked = likedBooks.some(book => book.id === bookId);
+    if (isBookLiked) {
+      const updatedLikes = likedBooks.filter(book => book.id !== bookId);
+      localStorage.setItem("likes", JSON.stringify(updatedLikes));
+      setLikedBooks(updatedLikes);
+    } else {
+      const bookToAdd = library.find(book => book.id === bookId);
+      if (bookToAdd) {
+        const updatedLikes = [...likedBooks, bookToAdd];
+        localStorage.setItem("likes", JSON.stringify(updatedLikes));
+        setLikedBooks(updatedLikes);
+      }
     }
-    const updatedLikes = [...likes, book];
-    localStorage.setItem("likes", JSON.stringify(updatedLikes));
   };
 
-  const shopHandler = (book) => {
+  const shopHandler = (book) => { /*basket */
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
     const existingBook = shop.find(item => item.id === book.id);
     if (existingBook) {
@@ -251,13 +262,13 @@ function Home() {
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
+    setBadgeCount(prevCount => prevCount + 1);  /* sepetteki değeri 1 arttır*/
+
     notification.open({
       message: 'Ürün Alışveriş Sepetine Eklendi.',
       icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
     })
   };
-
-
 
   return (
     <div>
@@ -288,9 +299,7 @@ function Home() {
               items={items}
             />
           </Sider>
-
           <Content style={contentStyle}>
-
             <div className="input">
               <Space.Compact block>
                 <Input
@@ -338,7 +347,7 @@ function Home() {
                   className="ant-card-body"
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
-                    <div onClick={() => likeHandler(book)}><Heart key="heart" /></div>,
+                    <div onClick={() => addAndRemoveFavorite(book.id)}><Heart key="heart" /></div>,
                     <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
                   ]}
                 >

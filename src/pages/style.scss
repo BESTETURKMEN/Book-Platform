@@ -21,11 +21,17 @@
     }
 }
 
+.ant-card-actions {
+    .anticon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
 
 .ant-card-cover {
     .img {
-        width: 320px;
-        margin: 5px;
+        width: 270px;
+        margin: 24px;
     }
 }
 
@@ -44,7 +50,7 @@
 
 .div-section {
     .ant-card {
-        width: 330px;
+        width: 315px;
         margin: 15px;
     }
 }
@@ -199,19 +205,20 @@
     .ant-btn {
         width: 80px;
         background-color: #ED213A;
-        margin-top: 20px;
-        margin-left: 1500px;
+        margin-top: 15px;
+        margin-left: 1285px;
 
     }
 }
 
 .total {
-    margin-left: 1400px;
+    margin-left: 1230px;
 }
 
 .shoptitle {
     .ant-typography {
-        margin-left: -1450px;
+        margin-left: -1290px;
+        // text-align: center;
     }
 }
 
