@@ -201,18 +201,20 @@
     margin: auto;
 }
 
-.alisveris {
+.ant-layout-content {
     .ant-btn {
         width: 80px;
         background-color: #ED213A;
         margin-top: 15px;
-        margin-left: 1285px;
+        margin-left: 1200px;
 
     }
 }
 
-.total {
-    margin-left: 1230px;
+.ant-layout-content {
+    .total{
+    margin-left: 1200px;
+    }
 }
 
 .shoptitle {
@@ -228,4 +230,23 @@
         height: 30px;
         background-color: #bebebe;
     }
+}
+
+.ant-input-number-wrapper {
+    .ant-input-number {
+        width: 50px;
+    }
+
+}
+
+.ant-space-compact {
+    .ant-input {
+        width: 500px;
+        text-align: center;
+    }
+}
+
+.ant-space-compact {
+    margin-left: -400px;
+    margin-top: 20px;
 }

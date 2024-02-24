@@ -28,9 +28,9 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
+  getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
-  getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>)];
+  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -87,13 +87,13 @@ function Contact() {
         style={headerStyle}
         actions={[
           <HeartOutlined key="heart" />,
-          <HomeOutlined key="home" />,
+          // <HomeOutlined key="home" />,
           <PhoneOutlined key="phone" />,
           <ShoppingCartOutlined key="shop" />,
         ]}>
         <div>MY BOOK PLATFORM</div>
         <div className="icons">
-          <Link to="/Home"><HomeOutlined className="home" /></Link>
+          {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
           <Link to="/Likes"><HeartOutlined className="heart" /></Link>
           <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
           <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>

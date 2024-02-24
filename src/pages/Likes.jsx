@@ -17,6 +17,7 @@ import { Card } from "antd";
 import "./style.scss";
 import { Typography } from "antd";
 import { Badge } from 'antd';
+import { notification } from "antd";
 
 
 const { Meta } = Card;
@@ -32,11 +33,9 @@ function getItem(label, key, icon, children, type) {
   };
 }
 const items = [
-  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
+  getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
-  getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>
-  )]
-  ;
+  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -80,6 +79,23 @@ function Likes() {
     setLikedBooks(updatedLikes);
   }
 
+  const shopHandler = (book) => { /*basket */
+    const shop = JSON.parse(localStorage.getItem("shop")) || [];
+    const existingBook = shop.find(item => item.id === book.id);
+    if (existingBook) {
+      return;
+    }
+    const updatedShop = [...shop, book];
+    localStorage.setItem("shop", JSON.stringify(updatedShop));
+
+    setBadgeCount(prevCount => prevCount + 1);  /* sepetteki değeri 1 arttır*/
+
+    notification.open({
+      message: 'Ürün Alışveriş Sepetine Eklendi.',
+      icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
+    })
+  };
+
   if (likedBooks === null || likedBooks.length === 0) {
     return (
       <Layout style={layoutStyle}>
@@ -87,13 +103,13 @@ function Likes() {
           style={headerStyle}
           actions={[
             <HeartOutlined key="heart" />,
-            <HomeOutlined key="home" />,
+            // <HomeOutlined key="home" />,
             <PhoneOutlined key="phone" />,
             <ShoppingCartOutlined key="shop" />,
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
-            <Link to="/Home"><HomeOutlined className="home" /></Link>
+            {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
             <Link to="/Likes"><HeartOutlined className="heart" /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
             <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
@@ -128,13 +144,13 @@ function Likes() {
         style={headerStyle}
         actions={[
           <HeartOutlined key="heart" />,
-          <HomeOutlined key="home" />,
+          // <HomeOutlined key="home" />,
           <PhoneOutlined key="phone" />,
           <ShoppingCartOutlined key="shop" />,
         ]}>
         <div>MY BOOK PLATFORM</div>
         <div className="icons">
-          <Link to="/Home"><HomeOutlined className="home" /></Link>
+          {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
           <Link to="/Likes"><HeartOutlined className="heart" /></Link>
           <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
           <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
@@ -169,7 +185,9 @@ function Likes() {
                   <DeleteOutlined
                     key="ellipsis"
                     onClick={() => RemoveCard(like.id)}
+
                   />,
+                  <ShoppingCartOutlined key="shop" onClick={() => shopHandler(like)} />,
                 ]}
               >
                 <Meta

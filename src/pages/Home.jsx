@@ -29,9 +29,9 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>),
+  getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
-  getItem("Alışveriş", "sub6", <Link to="/Alisveris"><ShoppingCartOutlined /></Link>)];
+  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -193,28 +193,28 @@ function Home() {
     },
   ]);
 
-  const [book, setBook] = useState({  /* kullanıcı kitap eklerse*/
-    id: "",
-    photo: "assets/eklenenkitap.jpg",
-    adi: "",
-    yazari: "",
-    basim: "",
-    fiyat: ""
-  });
+  // const [book, setBook] = useState({  /* kullanıcı kitap eklerse*/
+  //   id: "",
+  //   photo: "assets/eklenenkitap.jpg",
+  //   adi: "",
+  //   yazari: "",
+  //   basim: "",
+  //   fiyat: ""
+  // });
 
-  const addBook = () => { /* boşlukları temizle*/
-    if (
-      book.adi.trim() === "" ||
-      book.yazari.trim() === "" ||
-      book.basim.trim() === ""
-    ) {
-      return;
-    }
+  // const addBook = () => { /* boşlukları temizle*/
+  //   if (
+  //     book.adi.trim() === "" ||
+  //     book.yazari.trim() === "" ||
+  //     book.basim.trim() === ""
+  //   ) {
+  //     return;
+  //   }
 
-    setLibrary([...library, book]);
-    setBook({ adi: "", yazari: "", fiyat: "" });
-    setFilteredBooks([...library, book]);
-  };
+  //   setLibrary([...library, book]);
+  //   setBook({ adi: "", yazari: "", fiyat: "" });
+  //   setFilteredBooks([...library, book]); /*...library => önceki verileri de yazdır sonra book değişkeninin içini yazdır */
+  // };
 
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
@@ -224,7 +224,7 @@ function Home() {
     setInputText(lowerCase);
   };
 
-  const searchData = () => {  /*büyük küçük harf ve ingilizce kelime  duyarlılığı*/
+  const searchData = () => {  /*inputta filtreleme yapar*/
     const filteredData = library.filter((e) =>
       e.adi.toLocaleLowerCase().includes(inputText)
     );
@@ -240,7 +240,7 @@ function Home() {
   const addAndRemoveFavorite = (bookId) => {  /*eklenmediyse ekler, ekliyse siler */
     const isBookLiked = likedBooks.some(book => book.id === bookId);
     if (isBookLiked) {
-      const updatedLikes = likedBooks.filter(book => book.id !== bookId);
+      const updatedLikes = likedBooks.filter(book => book.id !== bookId); /* kitap id lerinden eşleşen var mı? diye kontrol eder*/
       localStorage.setItem("likes", JSON.stringify(updatedLikes));
       setLikedBooks(updatedLikes);
     } else {
@@ -277,13 +277,13 @@ function Home() {
           style={headerStyle}
           actions={[
             <HeartOutlined key="heart" />,
-            <HomeOutlined key="home" />,
+            // <HomeOutlined key="home" />,
             <PhoneOutlined key="phone" />,
             <ShoppingCartOutlined key="shop" />,
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
-            <Link to="/Home"><HomeOutlined className="home" /></Link>
+            {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
             <Link to="/Likes"><HeartOutlined className="heart" /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
             <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
@@ -300,7 +300,7 @@ function Home() {
             />
           </Sider>
           <Content style={contentStyle}>
-            <div className="input">
+            {/* <div className="input">
               <Space.Compact block>
                 <Input
                   placeholder="Kitap Adı"
@@ -327,7 +327,7 @@ function Home() {
                   Ekle
                 </Button>
               </Space.Compact>
-            </div>
+            </div> */}
             <div className="search-section">
               <Space.Compact block>
                 <Input
@@ -335,9 +335,9 @@ function Home() {
                   onChange={inputSearch}
                   onKeyUp={searchData}
                 />
-                <Button type="primary" onClick={searchData}>
+                {/* <Button type="primary" onClick={searchData}>
                   Ara
-                </Button>
+                </Button> */}
               </Space.Compact>
             </div>
             <div className="div-section">
