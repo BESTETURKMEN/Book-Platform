@@ -212,8 +212,8 @@
 }
 
 .ant-layout-content {
-    .total{
-    margin-left: 1200px;
+    .total {
+        margin-left: 1200px;
     }
 }
 
@@ -232,21 +232,41 @@
     }
 }
 
-.ant-input-number-wrapper {
+.ant-table-cell {
     .ant-input-number {
-        width: 50px;
+        width: 55px;
     }
-
 }
 
 .ant-space-compact {
     .ant-input {
         width: 500px;
         text-align: center;
+        margin: auto;
+        margin-left: -400px;
+        margin-top: 20px;
     }
 }
 
-.ant-space-compact {
-    margin-left: -400px;
-    margin-top: 20px;
+.ant-notification-notice-description {
+    text-decoration: underline;
+    color: blue
+}
+
+.ant-result-extra {
+    .ant-btn {
+        width: 150px;
+        margin: auto;
+        margin-top: 50px;
+
+    }
+}
+
+.ant-form-item-control-input-content {
+    .ant-btn {
+        width: 90px;
+        background-color: #bebebe;
+        margin: auto;
+        margin-top: 20px;
+    }
 }

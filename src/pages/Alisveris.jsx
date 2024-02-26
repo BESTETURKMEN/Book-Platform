@@ -17,6 +17,7 @@ import { Table } from 'antd';
 import { Typography } from "antd";
 import { Badge } from 'antd';
 import { InputNumber } from 'antd';
+import { Value } from "sass";
 
 
 
@@ -58,6 +59,7 @@ const footerStyle = {
 function Alisveris() {
 
     const [badgeCount, setBadgeCount] = useState(0);
+
     useEffect(() => {
         const shop = JSON.parse(localStorage.getItem("shop")) || [];
         setBadgeCount(shop.length);
@@ -70,15 +72,16 @@ function Alisveris() {
         const shopBooksJSON = localStorage.getItem("shop");
         if (shopBooksJSON) {
             const shopBooks = JSON.parse(shopBooksJSON);
-            const updatedShopBooks = shopBooks.map(book => {
+            const updatedShopBooks = shopBooks.map((book) => {
                 const miktar = 1;
                 const birimFiyat = parseFloat(book.fiyat);
                 const toplam = `${miktar * birimFiyat} TL`;
                 return {
                     ...book,
+                    bookId: book.id,
                     photo: book.photo,
                     ürün: book.adi,
-                    miktar: 1,
+                    miktar: miktar,
                     birimfiyati: birimFiyat,
                     toplam: toplam,
                 };
@@ -86,6 +89,23 @@ function Alisveris() {
             setShopBooks(updatedShopBooks);
         }
     }, []);
+
+
+    const onChange = (value, record) => { /*record değişkeninin kullandık her satır için  ayrı hesaplama  */
+        const updatedShopBooks = shopBooks.map((book) => {
+            if (book.bookId === record.bookId) {
+                const birimFiyat = parseFloat(book.fiyat);
+                const Counttoplam = `${value * birimFiyat} TL`;
+                return {
+                    ...book,
+                    miktar: value,
+                    toplam: Counttoplam,
+                };
+            }
+            return book;
+        });
+        setShopBooks(updatedShopBooks);
+    };
 
     function removeRow(rowId) {
         const updatedRows = shopBooks.filter(book => book.id !== rowId);
@@ -103,8 +123,8 @@ function Alisveris() {
         {
             title: 'Miktar',
             dataIndex: 'miktar',
-            render: () => (
-                <InputNumber addonBefore="+" defaultValue={1} />
+            render: (_, record) => (
+                <InputNumber min={1} max={10} defaultValue={1} value={record.miktar} onChange={(value) => onChange(value, record)} changeOnWheel />
             ),
         },
         {
@@ -197,13 +217,11 @@ function Alisveris() {
                 style={headerStyle}
                 actions={[
                     <HeartOutlined key="heart" />,
-                    // <HomeOutlined key="home" />,
                     <PhoneOutlined key="phone" />,
                     <ShoppingCartOutlined key="shop" />,
                 ]}>
                 <div>MY BOOK PLATFORM</div>
                 <div className="icons">
-                    {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
                     <Link to="/Likes"><HeartOutlined className="heart" /></Link>
                     <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
                     <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
