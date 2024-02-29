@@ -60,17 +60,21 @@ const footerStyle = {
 function Likes() {
 
   const [badgeCount, setBadgeCount] = useState(0);
-  useEffect(() => {
-    const shop = JSON.parse(localStorage.getItem("shop")) || [];
-    setBadgeCount(shop.length);
-  }, []);
-
-
   const [likedBooks, setLikedBooks] = useState([]);
 
+  useEffect(() => {    /*localstorage da shop varsa parse edip sepetin countunu arttır. */
+    const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+    if (shop !== "[]") {
+      const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
+      setBadgeCount(newBadgeCount);
+    }
+  }, []);
+
   useEffect(() => {
-    const likes = JSON.parse(localStorage.getItem("likes") || []);
-    setLikedBooks(likes);
+    const likes = window.localStorage.getItem("likes");
+    if (likes !== null) {
+      setLikedBooks(JSON.parse(likes))
+    }
   }, []);
 
   function RemoveCard(cardId) {
@@ -90,12 +94,14 @@ function Likes() {
 
     setBadgeCount(prevCount => prevCount + 1);  /* sepetteki değeri 1 arttır*/
 
+    /* sepete eklendi bildirimi */
     notification.open({
-      message: 'Ürün Alışveriş Sepetine Eklendi.',
-      icon: <ShoppingCartOutlined style={{ color: '#108ee9' }} />
+      description: `${book.adi}  Alışveriş Sepetine Eklendi`,
+      onClick: () => {
+        window.location.href = '/Alisveris';
+      }
     })
   };
-
   if (likedBooks === null || likedBooks.length === 0) {
     return (
       <Layout style={layoutStyle}>
@@ -103,13 +109,11 @@ function Likes() {
           style={headerStyle}
           actions={[
             <HeartOutlined key="heart" />,
-            // <HomeOutlined key="home" />,
             <PhoneOutlined key="phone" />,
             <ShoppingCartOutlined key="shop" />,
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
-            {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
             <Link to="/Likes"><HeartOutlined className="heart" /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
             <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
@@ -144,13 +148,11 @@ function Likes() {
         style={headerStyle}
         actions={[
           <HeartOutlined key="heart" />,
-          // <HomeOutlined key="home" />,
           <PhoneOutlined key="phone" />,
           <ShoppingCartOutlined key="shop" />,
         ]}>
         <div>MY BOOK PLATFORM</div>
         <div className="icons">
-          {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
           <Link to="/Likes"><HeartOutlined className="heart" /></Link>
           <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
           <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>

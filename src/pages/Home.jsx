@@ -55,7 +55,7 @@ const footerStyle = {
 
 function Home() {
   const [badgeCount, setBadgeCount] = useState(0);
-
+  const [likedBooks, setLikedBooks] = useState([]);
   const [library, setLibrary] = useState([{
     id: "1",
     photo: "assets/istanbulhatirasi.jpg",
@@ -183,35 +183,32 @@ function Home() {
     yazari: "Cemal Süreya",
     basim: "1936",
     fiyat: "102 TL"
-  },]);
-
-  useEffect(() => {
-    const shop = JSON.parse(localStorage.getItem("shop")) || []; /* buraya if ekle (localstorega boş olursa diye)*/
-    setBadgeCount(shop.length);
-  }, []);
-
+  }]);
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
+
 
   const inputSearch = (e) => {
     const lowerCase = e.target.value.toLocaleLowerCase();
     setInputText(lowerCase);
   };
 
-  const searchData = () => {  /*inputta filtreleme yapar*/
+  const searchData = () => {  /*inputta filtreleme yapar büyük küçük harf ve ing kelime durumunu değiştirir*/
     const filteredData = library.filter((e) =>
       e.adi.toLocaleLowerCase().includes(inputText)
     );
     setFilteredBooks(filteredData);
   };
 
-  const [likedBooks, setLikedBooks] = useState([]);
-  useEffect(() => {
-    const likes = JSON.parse(localStorage.getItem("likes") || []);
-    setLikedBooks(likes);
+  useEffect(() => {   /* likes sayfasına at  */
+    const likes = window.localStorage.getItem("likes");
+    if (likes !== null) {
+      setLikedBooks(JSON.parse(likes))
+    }
   }, []);
 
-  const addAndRemoveFavorite = (bookId) => {  /*eklenmediyse ekler, ekliyse siler */
+
+  const addAndRemoveFavorite = (bookId) => {  /*kitaplar favorilere eklenmediyse ekler, ekliyse siler */
     const isBookLiked = likedBooks.some(book => book.id === bookId);
     if (isBookLiked) {
       const updatedLikes = likedBooks.filter(book => book.id !== bookId); /* kitap id lerinden eşleşen var mı? diye kontrol eder*/
@@ -227,17 +224,35 @@ function Home() {
     }
   };
 
-  const shopHandler = (book) => { /*basket */
+  useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
+    const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+    const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
+    if (shop !== null) {
+      // const JsonShop = JSON.parse(shop)
+      // setBadgeCount(JsonShop.length)
+    } else if (shop !== "[]") {
+      const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
+      setBadgeCount(newBadgeCount);
+    }
+    setBadgeCount(newBadgeCount)
+  }, []);
+
+  const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
     const existingBook = shop.find(item => item.id === book.id);
+
     if (existingBook) {
       return;
     }
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
-    setBadgeCount(prevCount => prevCount + 1);  /* sepetteki değeri 1 arttır*/
+    const newBadgeCount = shop.length + 1;
+    localStorage.setItem("badgeCount", newBadgeCount.toString());
+    setBadgeCount(newBadgeCount);
 
+
+    /* sepete eklendi bildirimi */
     notification.open({
       description: `${book.adi}  Alışveriş Sepetine Eklendi`,
       onClick: () => {
@@ -281,9 +296,6 @@ function Home() {
                   onChange={inputSearch}
                   onKeyUp={searchData}
                 />
-                {/* <Button type="primary" onClick={searchData}>
-                  Ara
-                </Button> */}
               </Space.Compact>
             </div>
             <div className="div-section">

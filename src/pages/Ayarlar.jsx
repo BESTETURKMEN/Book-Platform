@@ -54,9 +54,13 @@ const footerStyle = {
 function Ayarlar() {
 
     const [badgeCount, setBadgeCount] = useState(0);
-    useEffect(() => {
-        const shop = JSON.parse(localStorage.getItem("shop")) || [];
-        setBadgeCount(shop.length);
+
+    useEffect(() => {    /*localstorage da shop varsa parse edip sepetin countunu arttır. */
+        const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+        if (shop !== "[]") {
+            const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
+            setBadgeCount(newBadgeCount);
+        }
     }, []);
 
     return (
@@ -65,13 +69,11 @@ function Ayarlar() {
                 style={headerStyle}
                 actions={[
                     <HeartOutlined key="heart" />,
-                    // <HomeOutlined key="home" />,
                     <PhoneOutlined key="phone" />,
                     <ShoppingCartOutlined key="shop" />,
                 ]}>
                 <div>MY BOOK PLATFORM</div>
                 <div className="icons">
-                    {/* <Link to="/Home"><HomeOutlined className="home" /></Link> */}
                     <Link to="/Likes"><HeartOutlined className="heart" /></Link>
                     <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
                     <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
@@ -88,7 +90,7 @@ function Ayarlar() {
                     />
                 </Sider>
                 <Content style={contentStyle}>
-                    <h1>AYARLAR</h1>
+
                 </Content>
             </Layout>
             <Footer style={footerStyle}>Created by Beste Türkmen</Footer>

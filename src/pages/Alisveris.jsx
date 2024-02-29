@@ -17,7 +17,6 @@ import { Table } from 'antd';
 import { Typography } from "antd";
 import { Badge } from 'antd';
 import { InputNumber } from 'antd';
-import { Value } from "sass";
 
 
 
@@ -59,16 +58,20 @@ const footerStyle = {
 function Alisveris() {
 
     const [badgeCount, setBadgeCount] = useState(0);
-
-    useEffect(() => {
-        const shop = JSON.parse(localStorage.getItem("shop")) || [];
-        setBadgeCount(shop.length);
-    }, []);
-
     const [shopBooks, setShopBooks] = useState([]);
 
 
-    useEffect(() => {
+    useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
+        const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+        if (shop !== null || shop !== "[]") {
+            const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
+            const lastCount = newBadgeCount
+            console.log(lastCount)
+            setBadgeCount(lastCount);
+        }
+    }, []);
+
+    useEffect(() => { /*row daki ürün hesaplaması  */
         const shopBooksJSON = localStorage.getItem("shop");
         if (shopBooksJSON) {
             const shopBooks = JSON.parse(shopBooksJSON);
@@ -78,7 +81,7 @@ function Alisveris() {
                 const toplam = `${miktar * birimFiyat} TL`;
                 return {
                     ...book,
-                    bookId: book.id,
+                    id: book.id,
                     photo: book.photo,
                     ürün: book.adi,
                     miktar: miktar,
@@ -90,10 +93,9 @@ function Alisveris() {
         }
     }, []);
 
-
-    const onChange = (value, record) => { /*record değişkeninin kullandık her satır için  ayrı hesaplama  */
+    const onChange = (value, record) => { /*inputta onchange kullandık. her satır için  ayrı hesaplama yapmak için record değişkenini kullandık.*/
         const updatedShopBooks = shopBooks.map((book) => {
-            if (book.bookId === record.bookId) {
+            if (book.id === record.id) {
                 const birimFiyat = parseFloat(book.fiyat);
                 const Counttoplam = `${value * birimFiyat} TL`;
                 return {
@@ -105,6 +107,9 @@ function Alisveris() {
             return book;
         });
         setShopBooks(updatedShopBooks);
+        const newBadgeCount = badgeCount + (value - record.miktar);
+        localStorage.setItem("badgeCount", newBadgeCount.toString());
+        setBadgeCount(newBadgeCount);
     };
 
     function removeRow(rowId) {
@@ -112,7 +117,15 @@ function Alisveris() {
         localStorage.setItem("shop", JSON.stringify(updatedRows));
         setShopBooks(updatedRows);
 
-        setBadgeCount(prevCount => prevCount - 1); /* sepetteki değeri 1 azalt*/
+        const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+        const JsonShop = JSON.parse(shop)
+        setBadgeCount(JsonShop.length)
+
+        if (shop === "[]") {
+            localStorage.setItem("badgeCount", "0")
+            setBadgeCount(0)
+        }
+
     }
 
     const columns = [

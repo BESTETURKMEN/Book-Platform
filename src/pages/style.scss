@@ -248,7 +248,17 @@
     }
 }
 
+.ant-notification-notice-wrapper {
+    margin-top: 55px;
+    margin-left: -5px;
+}
+
+.ant-notification-notice {
+    margin-top: 5px;
+}
+
 .ant-notification-notice-description {
+    margin-top: 25px;
     text-decoration: underline;
     color: blue
 }
