@@ -30,7 +30,7 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
   getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
-  getItem('Profil', 'sub5', <Link to="/Profile"> <UserOutlined /></Link>),
+  getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),
   getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
@@ -226,15 +226,10 @@ function Home() {
 
   useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
     const shop = localStorage.getItem("shop") || localStorage.getItem([]);
-    const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
-    if (shop !== null) {
-      // const JsonShop = JSON.parse(shop)
-      // setBadgeCount(JsonShop.length)
-    } else if (shop !== "[]") {
+    if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
     }
-    setBadgeCount(newBadgeCount)
   }, []);
 
   const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
@@ -270,11 +265,13 @@ function Home() {
             <HeartOutlined key="heart" />,
             <PhoneOutlined key="phone" />,
             <ShoppingCartOutlined key="shop" />,
+            <UserOutlined key="login" />
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
-            <Link to="/Likes"><HeartOutlined className="heart" /></Link>
+            <Link to="/Login"><UserOutlined /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
+            <Link to="/Likes"><HeartOutlined className="heart" /></Link>
             <Link to="/Alisveris"><ShoppingCartOutlined className="shop" /><Badge className="notif" count={badgeCount} /></Link>
           </div>
         </Header>
@@ -289,7 +286,6 @@ function Home() {
             />
           </Sider>
           <Content style={contentStyle}>
-            <div className="search-section">
               <Space.Compact block>
                 <Input
                   placeholder="Kitap Adı ile Arama Yapınız."
@@ -297,7 +293,6 @@ function Home() {
                   onKeyUp={searchData}
                 />
               </Space.Compact>
-            </div>
             <div className="div-section">
               {filteredBooks.map((book) => (
                 <Card

@@ -13,6 +13,7 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Badge } from 'antd';
 import React, { useState, useEffect } from "react";
+import { Button, Flex } from 'antd';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -51,7 +52,7 @@ const footerStyle = {
 };
 
 
-function Ayarlar() {
+function BeforeLogin() {
 
     const [badgeCount, setBadgeCount] = useState(0);
 
@@ -93,6 +94,31 @@ function Ayarlar() {
                 </Sider>
                 <Content style={contentStyle}>
 
+                    <Flex vertical gap="large" >
+                        <div className="titlehead">
+                            <p>Devam edebilmek için lütfen giriş yapın!</p>
+                        </div>
+                        <Link to="/Login">
+                            <Button className="btn-1" type="primary" block>
+                                Giriş Yap
+                            </Button>
+                        </Link>
+                        <div className="title">
+                            <p>Üye değil misiniz?
+                                Hızlı ve güvenli bir alışveriş için hemen yeni bir hesap oluşturun!</p>
+                        </div>
+                        <Link to="/SignUp">
+                            <Button className="btn-2" type="primary" block>
+                                Hemen Üye Ol
+                            </Button>
+                        </Link>
+                        <Link to="/Alisveris">
+                            <Button className="btn-3" type="primary" block>
+                                Üye Olmadan Devam Et
+                            </Button>
+                        </Link>
+
+                    </Flex>
                 </Content>
             </Layout>
             <Footer style={footerStyle}>Created by Beste Türkmen</Footer>
@@ -100,4 +126,4 @@ function Ayarlar() {
     );
 }
 
-export default Ayarlar;
+export default BeforeLogin;
