@@ -2,7 +2,7 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Layout, Button } from "antd";
 import {
-    SettingOutlined,
+    // SettingOutlined,
     HeartOutlined,
     HomeOutlined,
     PhoneOutlined,
@@ -30,8 +30,8 @@ function getItem(label, key, icon, children, type) {
 }
 const items = [
     getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
-    getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),
-    getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
+    getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
+// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -61,10 +61,10 @@ function Alisveris() {
     useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
         const shop = localStorage.getItem("shop") || localStorage.getItem([]);
         if (shop !== null || shop !== "[]") {
+            // localStorage.setItem("badgeCount", "1");
             const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
             const lastCount = newBadgeCount
             setBadgeCount(lastCount);
-
         }
     }, []);
 

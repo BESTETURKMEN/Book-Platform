@@ -15,7 +15,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Checkbox, Form, Input } from 'antd';
 import { notification } from 'antd';
 import { Link } from "react-router-dom";
-import Password from "antd/es/input/Password";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -29,8 +29,8 @@ function getItem(label, key, icon, children, type) {
 }
 const items = [
     getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
-    getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),
-    getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
+    getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
+// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -56,7 +56,6 @@ const footerStyle = {
 function Login() {
 
     const [badgeCount, setBadgeCount] = useState(0);
-
 
     useEffect(() => {    /*localstorage da shop varsa parse edip sepetin countunu arttır. */
         const shop = localStorage.getItem("shop") || localStorage.getItem([]);

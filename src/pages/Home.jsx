@@ -30,8 +30,8 @@ function getItem(label, key, icon, children, type) {
 
 const items = [
   getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
-  getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),
-  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
+  getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
+// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -286,13 +286,13 @@ function Home() {
             />
           </Sider>
           <Content style={contentStyle}>
-              <Space.Compact block>
-                <Input
-                  placeholder="Kitap Adı ile Arama Yapınız."
-                  onChange={inputSearch}
-                  onKeyUp={searchData}
-                />
-              </Space.Compact>
+            <Space.Compact block>
+              <Input
+                placeholder="Kitap Adı ile Arama Yapınız."
+                onChange={inputSearch}
+                onKeyUp={searchData}
+              />
+            </Space.Compact>
             <div className="div-section">
               {filteredBooks.map((book) => (
                 <Card

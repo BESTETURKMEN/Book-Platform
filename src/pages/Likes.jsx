@@ -34,8 +34,8 @@ function getItem(label, key, icon, children, type) {
 }
 const items = [
   getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
-  getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),
-  getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
+  getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
+// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -62,9 +62,9 @@ function Likes() {
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
 
-  useEffect(() => {    /*localstorage da shop varsa parse edip sepetin countunu arttır. */
+  useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
     const shop = localStorage.getItem("shop") || localStorage.getItem([]);
-    if (shop !== "[]") {
+    if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
     }
@@ -83,16 +83,20 @@ function Likes() {
     setLikedBooks(updatedLikes);
   }
 
-  const shopHandler = (book) => { /*basket */
+  const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
     const existingBook = shop.find(item => item.id === book.id);
+
     if (existingBook) {
       return;
     }
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
-    setBadgeCount(prevCount => prevCount + 1);  /* sepetteki değeri 1 arttır*/
+    const newBadgeCount = shop.length + 1;
+    localStorage.setItem("badgeCount", newBadgeCount.toString());
+    setBadgeCount(newBadgeCount);
+
 
     /* sepete eklendi bildirimi */
     notification.open({
@@ -102,6 +106,7 @@ function Likes() {
       }
     })
   };
+
   if (likedBooks === null || likedBooks.length === 0) {
     return (
       <Layout style={layoutStyle}>
