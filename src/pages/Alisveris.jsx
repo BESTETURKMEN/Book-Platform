@@ -125,23 +125,33 @@ function Alisveris() {
         localStorage.setItem("shop", JSON.stringify(updatedRows));
         setShopBooks(updatedRows);
 
-        const shop = localStorage.getItem("shop") || localStorage.getItem([]);
-        const JsonShop = JSON.parse(shop)
-        setBadgeCount(JsonShop.length)
+        const shop = JSON.parse(localStorage.getItem("shop") || "[]");
+        let remainingBookCount = 0; /**geriye kalan  */
+        shop.forEach(book => {
+            remainingBookCount += book.miktar || 0;
+        });
 
-        if (shop === "[]") {
-            localStorage.setItem("badgeCount", "0")
-            localStorage.setItem("miktar_1", "0")
-            localStorage.setItem("miktar_2", "0")
-            localStorage.setItem("miktar_3", "0")
-            localStorage.setItem("miktar_4", "0")
-            localStorage.setItem("miktar_5", "0")
-            localStorage.setItem("miktar_6", "0")
-            setBadgeCount(0)
+        /*tüm miktarları sıfırlar */
+        if (remainingBookCount === 0) {
+            localStorage.setItem("badgeCount", "0");
+            setBadgeCount(0);
+            shopBooks.forEach(book => {
+                localStorage.setItem(`miktar_${book.id}`, "0");
+            });
+        } else {
+            setBadgeCount(remainingBookCount);
 
+            // Kaldırılan ürünün miktarını güncelle
+            const removedBook = shopBooks.find(book => book.id === rowId);
+            if (removedBook) {
+                const previousCount = parseInt(localStorage.getItem(`miktar_${rowId}`) || 0);
+                const newBadgeCount = Math.max(remainingBookCount - previousCount, 0); /**math max: gelen verinin en büyük olanını getirir */
+                localStorage.setItem(`miktar_${rowId}`, "0");
+                localStorage.setItem("badgeCount", newBadgeCount.toString());
+            }
         }
-
     }
+
 
     const columns = [
         {
