@@ -61,7 +61,6 @@ function Alisveris() {
     useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
         const shop = localStorage.getItem("shop") || localStorage.getItem([]);
         if (shop !== null || shop !== "[]") {
-            // localStorage.setItem("badgeCount", "1");
             const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
             const lastCount = newBadgeCount
             setBadgeCount(lastCount);
