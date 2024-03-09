@@ -245,7 +245,7 @@ function Alisveris() {
     }
 
     let topla = 0;    /*toplam count değerini aldık.  */
-    shopBooks.map(book => {
+    shopBooks.forEach(book => {
         topla += parseFloat(book.toplam) || 0;
     });
 

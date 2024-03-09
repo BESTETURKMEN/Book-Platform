@@ -9,11 +9,11 @@
 }
 
 .ant-layout {
-    .ant-layout-sider.ant-layout-sider-dark {
-        width: 256px;
+    .ant-layout-sider {
         background-color: white;
     }
 }
+
 
 .ant-layout-content {
     .ant-form {
@@ -30,8 +30,8 @@
 
 .ant-card-cover {
     .img {
-        width: 270px;
-        margin: 24px;
+        width: 250px;
+        margin: 15px;
     }
 }
 
@@ -368,3 +368,136 @@
         }
     }
 }
+
+.ant-switch {
+    margin-left: -50px
+}
+
+.icons {
+    margin-top: -110px;
+}
+
+.icons {
+    .ant-switch {
+        width: 60px;
+        margin-top: -5px;
+        margin-left: -55px;
+        margin-right: 20px;
+    }
+}
+
+.icons {
+    .ant-badge {
+        margin-top: -40px;
+        margin-left: -10px;
+    }
+}
+
+.icons {
+    .ant-badge {
+        .ant-scroll-number {
+            background-color: red;
+            color: white;
+            margin-left: 4px;
+        }
+    }
+}
+
+.ant-layout-content {
+    background-color: "#f2f2f2";
+}
+
+.ant-layout-sider-children {
+    background-color: "#f2f2f2";
+
+    .ant-menu {
+        background-color: "#f2f2f2";
+    }
+}
+
+.ant-layout {
+    .ant-layout-header {
+
+        text-align: "center";
+        font-size: "28px";
+        background-color: "#f2f2f2";
+    }
+}
+
+.ant-layout {
+    .ant-layout-footer {
+        background-color: "#f2f2f2";
+        text-align: "center";
+    }
+}
+
+.ant-card-actions {
+    .ant-btn {
+        background-color: white;
+        color: rgba(0, 0, 0, 0.45),
+    }
+}
+
+.ant-badge {
+    .ant-scroll-number {
+        background-color: white;
+        color: rgba(0, 0, 0, 0.45);
+        margin-left: -7px;
+        font-size: 13px;
+    }
+}
+
+.ant-card-actions {
+    .ant-btn {
+        .ant-wave {
+            background-color: white;
+        }
+    }
+}
+// .ant-popover-content{
+    
+// }
+.ant-popover-inner {
+    .ant-popover-inner-content {
+        .ant-btn {
+            width: 65px;
+            height: 23px;
+            margin: 10px;
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+    }
+}
+
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+/*dark mode */
+// .ant-layout-content {
+//     background-color: black;
+// }
+
+// .ant-layout-sider-children {
+//     background-color: rgb(43, 42, 42);
+
+//     .ant-menu {
+//         background-color: rgb(43, 42, 42);
+//     }
+// }
+
+// .ant-layout {
+//     .ant-layout-header {
+//         background-color: rgb(43, 42, 42);
+//         text-align: "center";
+//         font-size: "28px";
+//     }
+// }
+
+// .ant-layout {
+//     .ant-layout-footer {
+//         background-color: rgb(43, 42, 42);
+//     }
+// }

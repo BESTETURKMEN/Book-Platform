@@ -3,18 +3,22 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Card, Input, Layout } from "antd";
 import { FloatButton, notification } from "antd";
+import { Button, Popover } from 'antd';
 import {
-  SettingOutlined,
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
   UserOutlined,
   ShoppingCartOutlined,
+  CommentOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import Heart from "../components/heart";
 import { Badge, Space } from 'antd';
+import { List } from 'antd';
+// import SwitchButton from "../components/SwitchButton";
+// import { useThemeSwitcher } from "react-css-theme-switcher";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -34,6 +38,7 @@ const items = [
 // getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
+
 const headerStyle = {
   textAlign: "center",
   fontSize: "28px",
@@ -50,10 +55,58 @@ const contentStyle = {
 
 const footerStyle = {
   textAlign: "center",
-  backgroundColor: "#F2F2F2",
 };
 
+
 function Home() {
+
+
+
+  const [comment, setComment] = useState('');  /**input value state */
+  const [comments, setComments] = useState([]); /**input send button state */
+  const [badgeComment, setBadgeComment] = useState(0);  /**comment count */
+
+
+  const handleCommentChange = (e) => { /*comment input changes */
+    const com = e.target.value;
+    setComment(com)
+
+  }
+  const handleCommentSubmit = () => { /*comment send buton */
+    setBadgeComment(prevCount => prevCount + 1)
+    if (comment.trim() !== '') {
+      const newComments = [...comments, comment];
+      setComments(newComments);
+      localStorage.setItem('comments', JSON.stringify(newComments));
+
+    }
+  }
+
+  const content = (
+    <div>
+      <input onChange={handleCommentChange}></input>
+      <Button onClick={handleCommentSubmit} type="primary">Gönder</Button>
+      <p>Yorumlar</p>
+      <div>
+        <List
+          itemLayout="horizontal"
+          dataSource={comments}
+          renderItem={(item, index) => (
+            <List.Item>
+              <List.Item.Meta
+                key={index}
+                title={<p>{item}</p>}
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+    </div>
+  );
+
+  // const { currentTheme } = useThemeSwitcher();
+  // const [countComment, setCountComment] = useState(0)
+
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
   const [library, setLibrary] = useState([{
@@ -184,8 +237,10 @@ function Home() {
     basim: "1936",
     fiyat: "102 TL"
   }]);
+
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
+
 
 
   const inputSearch = (e) => {
@@ -269,6 +324,7 @@ function Home() {
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
+            {/* <SwitchButton /> */}
             <Link to="/Login"><UserOutlined /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
             <Link to="/Likes"><HeartOutlined className="heart" /></Link>
@@ -301,6 +357,9 @@ function Home() {
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
                     <div onClick={() => addAndRemoveFavorite(book.id)}><Heart key="heart" /></div>,
+                    <Popover content={content} title="Lütfen Yorum Giriniz">
+                      <Button type="primary"><CommentOutlined /><Badge key="badgecomment" size="small" count={badgeComment} /></Button>
+                    </Popover>,
                     <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
                   ]}
                 >
