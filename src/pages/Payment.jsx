@@ -4,7 +4,6 @@ import { Layout } from "antd";
 import React, { useState, useEffect } from "react";
 import { Button, Result } from 'antd';
 import {
-    SettingOutlined,
     HeartOutlined,
     HomeOutlined,
     PhoneOutlined,

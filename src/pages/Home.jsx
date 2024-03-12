@@ -59,18 +59,16 @@ const footerStyle = {
 
 
 function Home() {
-
-
-
   const [comment, setComment] = useState('');  /**input value state */
-  const [comments, setComments] = useState([]); /**input send button state */
-  const [badgeComment, setBadgeComment] = useState(0);  /**comment count */
+  const [comments, setComments] = useState([]); /**input send button */
+  const [badgeComment, setBadgeComment] = useState(0); /**comment count */
 
 
   const handleCommentChange = (e) => { /*comment input changes */
     const com = e.target.value;
-    setComment(com)
-
+    if (com !== null) {
+      setComment(com)
+    }
   }
   const handleCommentSubmit = () => { /*comment send buton */
     setBadgeComment(prevCount => prevCount + 1)
@@ -78,7 +76,6 @@ function Home() {
       const newComments = [...comments, comment];
       setComments(newComments);
       localStorage.setItem('comments', JSON.stringify(newComments));
-
     }
   }
 
@@ -104,8 +101,6 @@ function Home() {
     </div>
   );
 
-  // const { currentTheme } = useThemeSwitcher();
-  // const [countComment, setCountComment] = useState(0)
 
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
@@ -238,10 +233,9 @@ function Home() {
     fiyat: "102 TL"
   }]);
 
+
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
-
-
 
   const inputSearch = (e) => {
     const lowerCase = e.target.value.toLocaleLowerCase();
@@ -297,7 +291,8 @@ function Home() {
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
-    const newBadgeCount = shop.length + 1;
+    const newBadgeCounts = localStorage.getItem("badgeCount")
+    const newBadgeCount = parseInt(newBadgeCounts) + 1; /**newbadgecounts string geldiği için parseInt le integer yaptık */
     localStorage.setItem("badgeCount", newBadgeCount.toString());
     setBadgeCount(newBadgeCount);
 

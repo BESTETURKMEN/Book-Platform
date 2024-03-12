@@ -2,7 +2,6 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Layout } from "antd";
 import {
-    SettingOutlined,
     HeartOutlined,
     HomeOutlined,
     PhoneOutlined,

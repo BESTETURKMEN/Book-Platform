@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import {
     ShoppingCartOutlined,
     MailOutlined,
-    SettingOutlined,
     HeartOutlined,
     HomeOutlined,
     PhoneOutlined,

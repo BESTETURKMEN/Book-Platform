@@ -5,7 +5,6 @@ import { Layout } from "antd";
 import { FloatButton } from "antd";
 import {
   ShoppingCartOutlined,
-  SettingOutlined,
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
@@ -93,7 +92,9 @@ function Likes() {
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
-    const newBadgeCount = shop.length + 1;
+
+    const newBadgeCounts = localStorage.getItem("badgeCount")
+    const newBadgeCount = parseInt(newBadgeCounts) + 1; /**newbadgecounts string geldiği için parseInt le integer yaptık */
     localStorage.setItem("badgeCount", newBadgeCount.toString());
     setBadgeCount(newBadgeCount);
 
@@ -106,6 +107,7 @@ function Likes() {
       }
     })
   };
+
 
   if (likedBooks === null || likedBooks.length === 0) {
     return (

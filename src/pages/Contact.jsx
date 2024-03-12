@@ -4,7 +4,6 @@ import { Layout } from "antd";
 import { FloatButton } from "antd";
 import React, { useState, useEffect } from "react";
 import {
-  SettingOutlined,
   HeartOutlined,
   HomeOutlined,
   PhoneOutlined,
