@@ -19,6 +19,7 @@ import { Badge, Space } from 'antd';
 import { List } from 'antd';
 // import SwitchButton from "../components/SwitchButton";
 // import { useThemeSwitcher } from "react-css-theme-switcher";
+// import axios from "axios";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -35,7 +36,6 @@ function getItem(label, key, icon, children, type) {
 const items = [
   getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
   getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
-// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
 
 const layoutStyle = { minHeight: "100vh" };
 
@@ -59,52 +59,30 @@ const footerStyle = {
 
 
 function Home() {
-  const [comment, setComment] = useState('');  /**input value state */
+  const [bookComments, setBookComments] = useState({});
   const [comments, setComments] = useState([]); /**input send button */
   const [badgeComment, setBadgeComment] = useState(0); /**comment count */
 
-
-  const handleCommentChange = (e) => { /*comment input changes */
+  const handleCommentChange = (bookId, e) => {
     const com = e.target.value;
-    if (com !== null) {
-      setComment(com)
-    }
-  }
-  const handleCommentSubmit = () => { /*comment send buton */
-    setBadgeComment(prevCount => prevCount + 1)
-    if (comment.trim() !== '') {
-      const newComments = [...comments, comment];
-      setComments(newComments);
-      localStorage.setItem('comments', JSON.stringify(newComments));
-    }
+    setBookComments(prevState => ({
+      ...prevState,
+      [bookId]: com,
+    }));
   }
 
-  const content = (
-    <div>
-      <input onChange={handleCommentChange}></input>
-      <Button onClick={handleCommentSubmit} type="primary">Gönder</Button>
-      <p>Yorumlar</p>
-      <div>
-        <List
-          itemLayout="horizontal"
-          dataSource={comments}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                key={index}
-                title={<p>{item}</p>}
-              />
-            </List.Item>
-          )}
-        />
-      </div>
-    </div>
-  );
-
+  const handleCommentSubmit = (bookId) => {
+    const commentValue = bookComments[bookId];
+    if (commentValue && commentValue.trim() !== '') { /**yandaki boşlukları temizle */
+      const newComment = { bookId, comment: commentValue };
+      setComments(prevComments => [...prevComments, newComment]);
+      localStorage.setItem('commentCounts', JSON.stringify(newComment));
+    }
+  }
 
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
-  const [library, setLibrary] = useState([{
+  const library = [{
     id: "1",
     photo: "assets/istanbulhatirasi.jpg",
     adi: "İstanbul Hatırası",
@@ -231,11 +209,10 @@ function Home() {
     yazari: "Cemal Süreya",
     basim: "1936",
     fiyat: "102 TL"
-  }]);
-
-
+  }];
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
+
 
   const inputSearch = (e) => {
     const lowerCase = e.target.value.toLocaleLowerCase();
@@ -274,7 +251,7 @@ function Home() {
   };
 
   useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
-    const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+    const shop = localStorage.getItem("shop") || [];
     if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
@@ -283,6 +260,7 @@ function Home() {
 
   const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
     const shop = JSON.parse(localStorage.getItem("shop")) || [];
+
     const existingBook = shop.find(item => item.id === book.id);
 
     if (existingBook) {
@@ -291,8 +269,12 @@ function Home() {
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
-    const newBadgeCounts = localStorage.getItem("badgeCount")
-    const newBadgeCount = parseInt(newBadgeCounts) + 1; /**newbadgecounts string geldiği için parseInt le integer yaptık */
+    const newBadgeCounts = localStorage.getItem("badgeCount");
+    let newBadgeCount = 0;
+
+    if (newBadgeCounts !== null && !isNaN(parseInt(newBadgeCounts))) {
+      newBadgeCount = parseInt(newBadgeCounts) + 1;
+    }
     localStorage.setItem("badgeCount", newBadgeCount.toString());
     setBadgeCount(newBadgeCount);
 
@@ -319,7 +301,6 @@ function Home() {
           ]}>
           <div>MY BOOK PLATFORM</div>
           <div className="icons">
-            {/* <SwitchButton /> */}
             <Link to="/Login"><UserOutlined /></Link>
             <Link to="/Contact"><PhoneOutlined className="phone" /></Link>
             <Link to="/Likes"><HeartOutlined className="heart" /></Link>
@@ -352,7 +333,24 @@ function Home() {
                   cover={<img className="img" alt="" src={book.photo} />}
                   actions={[
                     <div onClick={() => addAndRemoveFavorite(book.id)}><Heart key="heart" /></div>,
-                    <Popover content={content} title="Lütfen Yorum Giriniz">
+                    <Popover content={<div>
+                      <input onChange={(e) => handleCommentChange(book.id, e)}></input>
+                      <Button onClick={() => handleCommentSubmit(book.id)} type="primary">Gönder</Button>
+                      <p>Yorumlar</p>
+                      <div>
+                        <List
+                          itemLayout="horizontal"
+                          dataSource={comments.filter(comment => comment.bookId === book.id)}
+                          renderItem={(item, index) => (
+                            <List.Item key={index}>
+                              <List.Item.Meta
+                                title={item.comment}
+                              />
+                            </List.Item>
+                          )}
+                        />
+                      </div>
+                    </div>} title="Lütfen Yorum Giriniz">
                       <Button type="primary"><CommentOutlined /><Badge key="badgecomment" size="small" count={badgeComment} /></Button>
                     </Popover>,
                     <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
@@ -378,4 +376,3 @@ function Home() {
 }
 
 export default Home;
-

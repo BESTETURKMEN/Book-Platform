@@ -62,7 +62,7 @@ function Likes() {
   const [likedBooks, setLikedBooks] = useState([]);
 
   useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
-    const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+    const shop = localStorage.getItem("shop") || [];
     if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
@@ -92,9 +92,12 @@ function Likes() {
     const updatedShop = [...shop, book];
     localStorage.setItem("shop", JSON.stringify(updatedShop));
 
+    const newBadgeCounts = localStorage.getItem("badgeCount");
+    let newBadgeCount = 0;
 
-    const newBadgeCounts = localStorage.getItem("badgeCount")
-    const newBadgeCount = parseInt(newBadgeCounts) + 1; /**newbadgecounts string geldiği için parseInt le integer yaptık */
+    if (newBadgeCounts !== null && !isNaN(parseInt(newBadgeCounts))) {
+      newBadgeCount = parseInt(newBadgeCounts) + 1;
+    }
     localStorage.setItem("badgeCount", newBadgeCount.toString());
     setBadgeCount(newBadgeCount);
 
