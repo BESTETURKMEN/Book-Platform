@@ -17,9 +17,7 @@ import { Link } from "react-router-dom";
 import Heart from "../components/heart";
 import { Badge, Space } from 'antd';
 import { List } from 'antd';
-// import SwitchButton from "../components/SwitchButton";
-// import { useThemeSwitcher } from "react-css-theme-switcher";
-// import axios from "axios";
+
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -57,28 +55,9 @@ const footerStyle = {
   textAlign: "center",
 };
 
-
 function Home() {
-  const [bookComments, setBookComments] = useState({});
-  const [comments, setComments] = useState([]); /**input send button */
-  const [badgeComment, setBadgeComment] = useState(0); /**comment count */
-
-  const handleCommentChange = (bookId, e) => {
-    const com = e.target.value;
-    setBookComments(prevState => ({
-      ...prevState,
-      [bookId]: com,
-    }));
-  }
-
-  const handleCommentSubmit = (bookId) => {
-    const commentValue = bookComments[bookId];
-    if (commentValue && commentValue.trim() !== '') { /**yandaki boşlukları temizle */
-      const newComment = { bookId, comment: commentValue };
-      setComments(prevComments => [...prevComments, newComment]);
-      localStorage.setItem('commentCounts', JSON.stringify(newComment));
-    }
-  }
+  const [commentValue, setCommentValue] = useState();
+  const [commentData, setCommentData] = useState([]);
 
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
@@ -214,6 +193,27 @@ function Home() {
   const [filteredBooks, setFilteredBooks] = useState(library);
 
 
+  useEffect(() => {
+    const storedComments = localStorage.getItem('bookComments');
+    if (storedComments) {
+      setCommentData(JSON.parse(storedComments));
+    }
+  }, []);
+
+  const handleCommentChange = (e) => {
+    const { value } = e.target;
+    setCommentValue(value)
+  }
+
+
+  const handleCommentSubmit = (bookId) => {
+    const newComment = { bookId, commentValue };
+    commentData.push(newComment)
+    setCommentData([...commentData])
+    localStorage.setItem("bookComments", JSON.stringify(commentData));
+  }
+
+
   const inputSearch = (e) => {
     const lowerCase = e.target.value.toLocaleLowerCase();
     setInputText(lowerCase);
@@ -326,43 +326,46 @@ function Home() {
               />
             </Space.Compact>
             <div className="div-section">
-              {filteredBooks.map((book) => (
-                <Card
-                  key={book.id}
-                  className="ant-card-body"
-                  cover={<img className="img" alt="" src={book.photo} />}
-                  actions={[
-                    <div onClick={() => addAndRemoveFavorite(book.id)}><Heart key="heart" /></div>,
-                    <Popover content={<div>
-                      <input onChange={(e) => handleCommentChange(book.id, e)}></input>
-                      <Button onClick={() => handleCommentSubmit(book.id)} type="primary">Gönder</Button>
-                      <p>Yorumlar</p>
-                      <div>
-                        <List
-                          itemLayout="horizontal"
-                          dataSource={comments.filter(comment => comment.bookId === book.id)}
-                          renderItem={(item, index) => (
-                            <List.Item key={index}>
-                              <List.Item.Meta
-                                title={item.comment}
-                              />
-                            </List.Item>
-                          )}
-                        />
-                      </div>
-                    </div>} title="Lütfen Yorum Giriniz">
-                      <Button type="primary"><CommentOutlined /><Badge key="badgecomment" size="small" count={badgeComment} /></Button>
-                    </Popover>,
-                    <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
-                  ]}
-                >
-                  <Meta
-                    title={<p>{book.adi}</p>}
-                    author={<p>{book.yazari}</p>}
-                    description={<p>{book.fiyat}</p>}
-                  />
-                </Card>
-              ))}
+              {filteredBooks.map((book) => {
+                const comment = commentData.filter(i => i.bookId === book.id)
+                return (
+                  <Card
+                    key={book.id}
+                    className="ant-card-body"
+                    cover={<img className="img" alt="" src={book.photo} />}
+                    actions={[
+                      <div onClick={() => addAndRemoveFavorite(book.id)}><Heart key="heart" /></div>,
+                      <Popover content={<div>
+                        <input onChange={(e) => handleCommentChange(e)}></input>
+                        <Button onClick={() => handleCommentSubmit(book.id)} type="primary">Gönder</Button>
+                        <p>Yorumlar</p>
+                        <div>
+                          <List
+                            itemLayout="horizontal"
+                            dataSource={comment}
+                            renderItem={(item, index) => (
+                              <List.Item key={index}>
+                                <List.Item.Meta
+                                  title={item.commentValue}
+                                />
+                              </List.Item>
+                            )}
+                          />
+                        </div>
+                      </div>} title="Lütfen Yorum Giriniz">
+                        <Button type="primary"><CommentOutlined /><Badge key="badgecomment" size="small" count={comment.length} /></Button>
+                      </Popover>,
+                      <ShoppingCartOutlined key="shop" onClick={() => shopHandler(book)} />,
+                    ]}
+                  >
+                    <Meta
+                      title={<p>{book.adi}</p>}
+                      author={<p>{book.yazari}</p>}
+                      description={<p>{book.fiyat}</p>}
+                    />
+                  </Card>
+                )
+              })}
             </div>
             <div style={{ height: "300vh", padding: 10 }}>
               <FloatButton.BackTop />
