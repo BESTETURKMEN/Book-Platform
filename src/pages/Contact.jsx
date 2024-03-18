@@ -165,7 +165,7 @@ function Contact() {
                 },
               ]}
             >
-              <Input />
+              <Input addonAfter=".com" defaultValue=" " />
             </Form.Item>
             <Form.Item
               name={["user", "age"]}

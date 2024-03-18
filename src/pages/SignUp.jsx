@@ -155,7 +155,6 @@ function SignUp() {
                                 }}
                             />
                         </Form.Item>
-
                         <Form.Item
                             label="E-posta Adresi"
                             name="TextArea"
@@ -166,9 +165,8 @@ function SignUp() {
                                 },
                             ]}
                         >
-                            <Input.TextArea />
+                            <Input addonAfter=".com" defaultValue=" " />
                         </Form.Item>
-
                         <Form.Item
                             label="Şifre"
                             name="Mentions"

@@ -2,7 +2,6 @@ import "../components/App.css";
 import "../components/style.scss";
 import { Layout, Button } from "antd";
 import {
-    // SettingOutlined,
     HeartOutlined,
     HomeOutlined,
     PhoneOutlined,
@@ -17,6 +16,8 @@ import { Table } from 'antd';
 import { Typography } from "antd";
 import { Badge } from 'antd';
 import { InputNumber } from 'antd';
+import { Radio } from 'antd';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -31,7 +32,7 @@ function getItem(label, key, icon, children, type) {
 const items = [
     getItem("Anasayfa", "sub6", <Link to="/Home"><HomeOutlined /></Link>),
     getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
-// getItem("Ayarlar", "sub4", <Link to="/Ayarlar"><SettingOutlined /></Link>)];
+
 
 const layoutStyle = { minHeight: "100vh" };
 const headerStyle = {
@@ -57,9 +58,10 @@ function Alisveris() {
 
     const [badgeCount, setBadgeCount] = useState(0);
     const [shopBooks, setShopBooks] = useState([]);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
-        const shop = localStorage.getItem("shop") || localStorage.getItem([]);
+        const shop = localStorage.getItem("shop") || "[]";
         if (shop !== null || shop !== "[]") {
             const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
             const lastCount = newBadgeCount
@@ -131,7 +133,7 @@ function Alisveris() {
             remainingBookCount += book.miktar || 0;
         });
 
-        /*tüm miktarları sıfırlar */
+        /*tüm badge miktarını sıfırlar */
         if (remainingBookCount === 0) {
             localStorage.setItem("badgeCount", "0");
             setBadgeCount(0);
@@ -151,7 +153,6 @@ function Alisveris() {
             }
         }
     }
-
 
     const columns = [
         {
@@ -174,7 +175,7 @@ function Alisveris() {
             dataIndex: 'toplam',
         },
         {
-            title: '',
+            title: <Radio.Button value="small" onClick={() => handleSelectButton()}>Tümünü Kaldır</Radio.Button>,
             dataIndex: 'fonksiyon',
             render: (_, record) => (
                 <CloseOutlined type="link" onClick={() => removeRow(record.id)} />
@@ -182,13 +183,10 @@ function Alisveris() {
         },
     ];
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
     const onSelectChange = (newSelectedRowKeys) => {
         setSelectedRowKeys(newSelectedRowKeys);
         const updatedShopBooks = shopBooks.map(book => {
             const newTotal = `${(book.miktar) * (parseFloat(book.birimfiyati) || 0)} TL`;
-
             return {
                 ...book,
                 toplam: newTotal,
@@ -196,11 +194,29 @@ function Alisveris() {
         });
         setShopBooks(updatedShopBooks);
     };
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
+    const rowSelection = { selectedRowKeys, onChange: onSelectChange };
     const hasSelected = selectedRowKeys.length > 0;
+
+    function handleSelectButton() {
+        if (selectedRowKeys.length === shopBooks.length) {
+            const shop = localStorage.getItem("shop") || "[]";
+            if (shop !== null) {
+                localStorage.setItem("shop", "[]")
+                setShopBooks([]);
+
+                let remainingBookCount = 0;
+                if (remainingBookCount === 0) {
+                    localStorage.setItem("badgeCount", "0");
+                    setBadgeCount(0);
+                    shopBooks.forEach(book => {
+                        localStorage.setItem(`miktar_${book.id}`, "0");
+                    });
+                } else {
+                    setBadgeCount(remainingBookCount);
+                }
+            }
+        }
+    }
 
     if (shopBooks === null || shopBooks.length === 0) {
         return (

@@ -18,7 +18,6 @@ import Heart from "../components/heart";
 import { Badge, Space } from 'antd';
 import { List } from 'antd';
 
-
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -36,7 +35,6 @@ const items = [
   getItem('Profil', 'sub5', <Link to="/BeforeLogin"> <UserOutlined /></Link>),];
 
 const layoutStyle = { minHeight: "100vh" };
-
 const headerStyle = {
   textAlign: "center",
   fontSize: "28px",
@@ -50,7 +48,6 @@ const contentStyle = {
   padding: "50px",
   textAlign: "center",
 };
-
 const footerStyle = {
   textAlign: "center",
 };
@@ -58,7 +55,6 @@ const footerStyle = {
 function Home() {
   const [commentValue, setCommentValue] = useState();
   const [commentData, setCommentData] = useState([]);
-
   const [badgeCount, setBadgeCount] = useState(0);
   const [likedBooks, setLikedBooks] = useState([]);
   const library = [{
@@ -192,27 +188,24 @@ function Home() {
   const [inputText, setInputText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState(library);
 
-
-  useEffect(() => {
+  useEffect(() => { /**yorum  */
     const storedComments = localStorage.getItem('bookComments');
     if (storedComments) {
       setCommentData(JSON.parse(storedComments));
     }
   }, []);
 
-  const handleCommentChange = (e) => {
+  const handleCommentChange = (e) => { /**comment input value */
     const { value } = e.target;
     setCommentValue(value)
   }
 
-
-  const handleCommentSubmit = (bookId) => {
+  const handleCommentSubmit = (bookId) => { /**comment send  */
     const newComment = { bookId, commentValue };
     commentData.push(newComment)
     setCommentData([...commentData])
     localStorage.setItem("bookComments", JSON.stringify(commentData));
   }
-
 
   const inputSearch = (e) => {
     const lowerCase = e.target.value.toLocaleLowerCase();
@@ -251,7 +244,8 @@ function Home() {
   };
 
   useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
-    const shop = localStorage.getItem("shop") || [];
+    localStorage.setItem("shop", "[]")
+    const shop = localStorage.getItem("shop") || "[]";
     if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
@@ -259,10 +253,9 @@ function Home() {
   }, []);
 
   const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
-    const shop = JSON.parse(localStorage.getItem("shop")) || [];
+    const shop = JSON.parse(localStorage.getItem("shop") || []);
 
     const existingBook = shop.find(item => item.id === book.id);
-
     if (existingBook) {
       return;
     }
@@ -287,7 +280,6 @@ function Home() {
       }
     })
   };
-
   return (
     <div>
       <Layout style={layoutStyle}>
