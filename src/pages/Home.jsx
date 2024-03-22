@@ -244,30 +244,24 @@ function Home() {
   };
 
   useEffect(() => { /*localstorage da shop varsa parse edip sepetin countunu arttır. */
-    localStorage.setItem("shop", "[]")
     const shop = localStorage.getItem("shop") || "[]";
     if (shop !== null || shop !== "[]") {
       const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
       setBadgeCount(newBadgeCount);
+    } else {
+      localStorage.setItem("shop", "[]")
     }
   }, []);
 
   const shopHandler = (book) => { /*sepette ürün varsa değeri arttır */
-    const shop = JSON.parse(localStorage.getItem("shop") || []);
-
+    const shop = JSON.parse(localStorage.getItem("shop")) || [];
     const existingBook = shop.find(item => item.id === book.id);
     if (existingBook) {
       return;
     }
-    const updatedShop = [...shop, book];
-    localStorage.setItem("shop", JSON.stringify(updatedShop));
-
-    const newBadgeCounts = localStorage.getItem("badgeCount");
-    let newBadgeCount = 0;
-
-    if (newBadgeCounts !== null && !isNaN(parseInt(newBadgeCounts))) {
-      newBadgeCount = parseInt(newBadgeCounts) + 1;
-    }
+    shop.push(book);
+    localStorage.setItem("shop", JSON.stringify(shop));
+    const newBadgeCount = shop.length;
     localStorage.setItem("badgeCount", newBadgeCount.toString());
     setBadgeCount(newBadgeCount);
 

@@ -64,8 +64,7 @@ function Alisveris() {
         const shop = localStorage.getItem("shop") || "[]";
         if (shop !== null || shop !== "[]") {
             const newBadgeCount = JSON.parse(localStorage.getItem("badgeCount"));
-            const lastCount = newBadgeCount
-            setBadgeCount(lastCount);
+            setBadgeCount(newBadgeCount );
         }
     }, []);
 
@@ -118,7 +117,7 @@ function Alisveris() {
             /*güncel toplam badge sayısı */
             const newBadgeCount = badgeCount + (value - record.miktar);
             localStorage.setItem("badgeCount", newBadgeCount.toString());
-            setBadgeCount(newBadgeCount);
+            setBadgeCount(newBadgeCount );
         }
     };
 
@@ -318,7 +317,6 @@ function Alisveris() {
                             <Table rowSelection={rowSelection} columns={columns} dataSource={shopBooks} rowKey={"id"} />
                             <Link to="/BeforeLogin"><Button type="primary">Satın al</Button></Link>
                             <h3 className="total">Toplam: {topla.toFixed(2)} TL</h3>
-
                         </div>
                     </div>
                 </Content>

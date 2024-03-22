@@ -2,10 +2,10 @@ import React from 'react';
 
 
 const footerStyle = {
-    textAlign: "center",
-    backgroundColor: "#F2F2F2",
-  };
-  
+  textAlign: "center",
+  backgroundColor: "#F2F2F2",
+};
+
 
 function Footer() {
   return (
